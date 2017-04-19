@@ -20,31 +20,67 @@ and open the template in the editor.
                 return xmlHttp;
             }
 
+            function validateEmail(email) {
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            }
+            function validatePhone(contact) {
+                var re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+                return re.test(contact);
+            }
+
+
             function Send() {
-                var first=document.getElementById("first").value;
-                var last=document.getElementById("last").value;
-                var email=document.getElementById("email").value;
-                var contact=document.getElementById("contact").value;
-                var subject=document.getElementById("subject").value;
-                var message=document.getElementById("message").value;
                 
-                var xmlHttp = getAjaxObject();
-                xmlHttp.onreadystatechange = function ()
-                {
-                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                var first = document.getElementById("first").value;
+                var last = document.getElementById("last").value;
+                var email = document.getElementById("email").value;
+                var contact = document.getElementById("contact").value;
+                var subject = document.getElementById("subject").value;
+                var message = document.getElementById("message").value;
+                alert(message);
+                document.getElementById("firste").innerHTML = "";
+                document.getElementById("laste").innerHTML = "";
+                document.getElementById("emaile").innerHTML = "";
+                document.getElementById("contacte").innerHTML = "";
+                document.getElementById("subjecte").innerHTML = "";
+                document.getElementById("messagee").innerHTML = "";
+                if (first === "") {
+                    document.getElementById("firste").innerHTML = "Please Enter the First Name ...";
+                } else if (last === "") {
+                    document.getElementById("laste").innerHTML = "Please Enter the Last Name ...";
+                } else if (email === "") {
+                    document.getElementById("emaile").innerHTML = "Please Enter the Email Address ...";
+                } else if (contact === "") {
+                    document.getElementById("contacte").innerHTML = "Please Enter the Contact no ...";
+                } else if (subject === "") {
+                    document.getElementById("subjecte").innerHTML = "Please Enter the Subject ...";
+                } else if (message === "") {
+                    document.getElementById("messagee").innerHTML = "Please Enter the Messages ...";
+                } else if(!validateEmail(email) ){
+                    document.getElementById("emaile").innerHTML = "Please Enter a Valid Email Address ...";
+                } else if(!validatePhone(contact) ){
+                    document.getElementById("contacte").innerHTML = "Please Enter a Valid Contact No ...";
+                }else{
+
+                    var xmlHttp = getAjaxObject();
+                    xmlHttp.onreadystatechange = function ()
                     {
-                        var reply = xmlHttp.responseText;
-
-                        if (reply === "Success") {
-                            alert("Success");
-                        } else {
-                            alert("Error");
+                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                        {
+                            var reply = xmlHttp.responseText;
+                            alert(reply);
+                            if (reply === "Success") {
+                                alert("Success");
+                            } else {
+                                alert("Error");
+                            }
                         }
-                    }
-                };
+                    };
 
-                xmlHttp.open("POST", "src/Contact?action=save&first=" + first+"&last="+ last+"&email="+ email+"&contact="+ contact+"&subject="+ subject+"&message="+ message, true);
-                xmlHttp.send();
+                    xmlHttp.open("POST", "src/Contact.php?action=save&first=" + first + "&last=" + last + "&email=" + email + "&contact=" + contact + "&subject=" + subject + "&message=" + message, true);
+                    xmlHttp.send();
+                }
             }
 
 
@@ -81,36 +117,40 @@ and open the template in the editor.
 
                             </div>
                             <div class="form-horizontal" style="font-size: 16px;letter-spacing: 1px; ">
+
                                 <div class="form-group FormFieldSpacing">
                                     <label id="MainContent_lblFirstName" class="col-md-3 control-label">First Name</label>
                                     <div class="col-md-9">
                                         <input type="text" id="first" class="form-control" />
-                                        <span>First Name is required</span>
+                                        <span style="color: red;" id="firste"></span>
                                     </div>
                                 </div>
                                 <div class="form-group FormFieldSpacing">
                                     <label class="col-md-3 control-label">Last Name</label>
                                     <div class="col-md-9">
                                         <input type="text" id="last" class="form-control" />
+                                        <span style="color: red;" id="laste"></span>
                                     </div>
                                 </div>
                                 <div class="form-group FormFieldSpacing">
                                     <label d="MainContent_lblEmailAddress" class="col-md-3 control-label">Email Address</label>
                                     <div class="col-md-9">
                                         <input type="email" id="email" class="form-control input-sm" />
+                                        <span style="color: red;" id="emaile"></span>
                                     </div>
                                 </div>
                                 <div class="form-group FormFieldSpacing">
                                     <label class="col-md-3 control-label">Contact Number</label>
                                     <div class="col-md-9">
                                         <input type="text" id="contact" class="form-control" />
+                                        <span style="color: red;" id="contacte"></span>
                                     </div>
                                 </div>
                                 <div class="form-group FormFieldSpacing">
                                     <label for="MainContent_ddlSubject" id="MainContent_lblSubject" class="col-md-3 control-label">Subject</label>
                                     <div class="col-md-9">
                                         <select name="ctl00$MainContent$ddlSubject" id="subject" class="form-control">
-                                            <option selected="selected" value="0">Please select a subject..</option>
+                                            <option selected="selected" value="">Please select a subject..</option>
                                             <option value="Comments -or- Suggestions">Comments -or- Suggestions</option>
                                             <option value="Birthday Cake">Birthday Cake</option>
                                             <option value="Custom Design Cake">Custom Design Cake</option>
@@ -118,13 +158,14 @@ and open the template in the editor.
                                             <option value="Other">Other</option>
 
                                         </select>
+                                        <span style="color: red;" id="subjecte"></span>
                                     </div>
                                 </div>
                                 <div class="form-group FormFieldSpacing">
                                     <label for="MainContent_txtMessage" id="MainContent_lblMessage" class="col-md-3 control-label">Message</label>
                                     <div class="col-md-9">
-                                        <textarea name="message" rows="5" cols="20" id="MainContent_txtMessage" class="form-control input-sm" placeholder="(Plain text only)">
-                                        </textarea>
+                                        <textarea name="message" rows="5" cols="20" id="message" class="form-control input-sm" placeholder="(Plain text only)"></textarea>
+                                        <span style="color: red;" id="messagee"></span>
                                     </div>
                                 </div>
 

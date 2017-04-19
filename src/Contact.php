@@ -1,7 +1,7 @@
 <?php
-
-$action = $_POST["action"];
-if ($action == "save") {
+$data   = filter_input(INPUT_POST, 'action', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+//$data = $_POST["action"];
+if ($data == "save") {
 
     $first = $_POST["first"];
     $last = $_POST["last"];
@@ -19,7 +19,7 @@ VALUES ('" . $first . "', '" . $last . "', '" . $email . "', '" . $contact . "',
     if ($conn->query($sql) === TRUE) {
         echo "Success";
     } else {
-        echo "Error";
+        echo "Error ".mysqli_error($conn);
     }
 
     $conn->close();
