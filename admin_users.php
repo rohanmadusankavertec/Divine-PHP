@@ -34,6 +34,7 @@ and open the template in the editor.
         <!-- Page Loader -->
         <?php
         include './admin_header.php';
+        include_once './src/DBConnection.php';
         ?>
         <section class="content">
             <div class="container-fluid">
@@ -59,20 +60,53 @@ and open the template in the editor.
                                             <th>Last Name</th>
                                             <th>Email</th>
                                             <th>Contact No</th>
+                                            <th>Address</th>
                                             <!--<th>Action</th>-->
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Rohan</td>
-                                            <td>Madusanka</td>
-                                            <td>rohan@gmail.com</td>
-                                            <td>0710000000</td>
-<!--                                            <td>
-                                                <button type="button" class="btn btn-warning waves-effect">Update</button>
-                                            </td>-->
-                                        </tr>
+                                        
+                                        
+                                        <?php
+                                        $sql = "SELECT id,first_name,last_name,email,contact_no,address FROM user";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            // output data of each row
+                                            while ($row = $result->fetch_assoc()) {
+                                                ?>
+
+                                                <tr>
+                                                    <td><?php echo $row["id"] ?></td>
+                                                    <td><?php echo $row["first_name"] ?></td>
+                                                    <td><?php echo $row["last_name"] ?></td>
+                                                    <td><?php echo $row["email"] ?></td>
+                                                    <td><?php echo $row["contact_no"] ?></td>
+                                                    <td><?php echo $row["address"] ?></td>
+<!--                                                    <td>
+                                                        <button type="button" class="btn btn-warning waves-effect">Update</button>
+                                                    </td>-->
+                                                </tr>
+
+
+
+
+        <?php
+    }
+}
+$conn->close();
+?>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
 
                                     </tbody>
                                 </table>

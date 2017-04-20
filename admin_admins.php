@@ -31,11 +31,82 @@ and open the template in the editor.
 
         <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
         <link href="admin/css/themes/all-themes.css" rel="stylesheet" />
+        
+        
+        <script type="text/javascript">
+            function getAjaxObject() {
+                var xmlHttp;
+                if (window.XMLHttpRequest) {
+                    xmlHttp = new XMLHttpRequest();
+                } else
+                {
+                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                return xmlHttp;
+            }
+
+            function Save() {
+
+                document.getElementById("outputmsg").className = "hidden";
+                document.getElementById("errormsg").className = "hidden";
+                var first = document.getElementById("first").value;
+                var last = document.getElementById("last").value;
+                var nic = document.getElementById("nic").value;
+                var gender = document.getElementById("gender").value;
+                var subject = document.getElementById("username").value;
+                var password = document.getElementById("password").value;
+                var rpassword = document.getElementById("rpassword").value;
+
+                document.getElementById("firste").innerHTML = "";
+                document.getElementById("laste").innerHTML = "";
+                document.getElementById("emaile").innerHTML = "";
+                document.getElementById("contacte").innerHTML = "";
+                document.getElementById("subjecte").innerHTML = "";
+                document.getElementById("messagee").innerHTML = "";
+                if (first === "") {
+                    document.getElementById("firste").innerHTML = "Please Enter the First Name ...";
+                } else if (last === "") {
+                    document.getElementById("laste").innerHTML = "Please Enter the Last Name ...";
+                } else if (nic === "") {
+                    document.getElementById("emaile").innerHTML = "Please Enter the NIC Number ...";
+                } else if (contact === "") {
+                    document.getElementById("contacte").innerHTML = "Please Enter the Contact no ...";
+                } else if (subject === "") {
+                    document.getElementById("subjecte").innerHTML = "Please Enter the Subject ...";
+                } else if (message === "") {
+                    document.getElementById("messagee").innerHTML = "Please Enter the Messages ...";
+                } else {
+
+                    var xmlHttp = getAjaxObject();
+                    xmlHttp.onreadystatechange = function ()
+                    {
+                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                        {
+                            var reply = xmlHttp.responseText;
+                            if (reply === "Success") {
+
+                                document.getElementById("successmsg").className = "alert alert-success";
+                            } else {
+                                document.getElementById("errormsg").className = "alert alert-danger";
+                            }
+                        }
+                    };
+
+                    xmlHttp.open("POST", "src/Admins.php?action=save&first=" + first + "&last=" + last + "&email=" + email + "&contact=" + contact + "&subject=" + subject + "&message=" + message, true);
+                    xmlHttp.send();
+                }
+            }
+
+
+
+        </script>
+        
     </head>
     <body class="theme-purple">
         <!-- Page Loader -->
         <?php
         include './admin_header.php';
+        include_once './src/DBConnection.php';
         ?>
         <section class="content">
             <div class="container-fluid">
@@ -52,30 +123,33 @@ and open the template in the editor.
 
                             </div>
                             <div class="body">
+                                <div class="hidden" id="outputmsg">
+                                        <strong>Success !</strong> Admin Saved Successfully ...
+                                    </div>
                                 <div class="row clearfix">
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="First Name" />
+                                                <input type="text" name="first" class="form-control" placeholder="First Name" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="Last Name" />
+                                                <input type="text" name="last" class="form-control" placeholder="Last Name" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="NIC" />
+                                                <input type="text" name="nic" class="form-control" placeholder="NIC" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <select class="form-control show-tick">
+                                        <select class="form-control show-tick" name="gender">
                                             <option value="">-- Select Gender --</option>
                                             <option value="1">Male</option>
                                             <option value="2">Female</option>
@@ -85,7 +159,7 @@ and open the template in the editor.
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="Username" />
+                                                <input type="text" name="username" class="form-control" placeholder="Username" />
                                             </div>
                                         </div>
                                     </div>
@@ -94,22 +168,21 @@ and open the template in the editor.
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="password" class="form-control" placeholder="Password" />
+                                                <input type="password" name="password" class="form-control" placeholder="Password" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="password" class="form-control" placeholder="Repeat Password" />
+                                                <input type="password" name="rpassword" class="form-control" placeholder="Repeat Password" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row clearfix demo-button-sizes">
-
                                         <div class="col-xs-6 col-sm-3 col-md-2 col-lg-2" style="float: right;">
-                                            <button type="button" class="btn btn-primary waves-effect">Update</button>
+                                            <button type="button" onclick="Save()" class="btn btn-primary waves-effect">Save</button>
                                         </div>
 
                                     </div>
@@ -142,17 +215,47 @@ and open the template in the editor.
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Rohan</td>
-                                            <td>Madusanka</td>
-                                            <td>931785245v</td>
-                                            <td>Male</td>
-                                            <td>Admin</td>
-                                            <td>
-                                                <button type="button" class="btn btn-warning waves-effect">Update</button>
-                                            </td>
-                                        </tr>
+
+                                        <?php
+                                        $sql = "SELECT id,first,last,nic,gender,username FROM admin";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            // output data of each row
+                                            while ($row = $result->fetch_assoc()) {
+                                                ?>
+
+                                                <tr>
+                                                    <td><?php echo $row["id"] ?></td>
+                                                    <td><?php echo $row["first"] ?></td>
+                                                    <td><?php echo $row["last"] ?></td>
+                                                    <td><?php echo $row["nic"] ?></td>
+                                                    <td><?php if ($row["gender"] === "1") {
+                                            echo "Male";
+                                        } else {
+                                            echo "Female";
+                                        } ?></td>
+                                                    <td><?php echo $row["username"] ?></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning waves-effect">Update</button>
+                                                    </td>
+                                                </tr>
+
+
+
+
+                                                <?php
+                                            }
+                                        }
+                                        $conn->close();
+                                        ?>
+
+
+
+
+
+
+
 
                                     </tbody>
                                 </table>

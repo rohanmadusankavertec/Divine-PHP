@@ -34,13 +34,14 @@ and open the template in the editor.
         <!-- Page Loader -->
         <?php
         include './admin_header.php';
+        include_once './src/DBConnection.php';
         ?>
         <section class="content">
             <div class="container-fluid">
                 <div class="block-header">
                     <h2>Contact</h2>
                 </div>
-                
+
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="card">
@@ -61,22 +62,50 @@ and open the template in the editor.
                                             <th>Contact No</th>
                                             <th>Subject</th>
                                             <th>Message</th>
-                                            <th>Action</th>
+                                            <!--<th>Action</th>-->
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Rohan</td>
-                                            <td>Madusanka</td>
-                                            <td>rohan@gmail.com</td>
-                                            <td>0710000000</td>
-                                            <td>Other</td>
-                                            <td>Your Foods are awesome..</td>
-                                            <td>
-                                                <button type="button" class="btn btn-warning waves-effect">Update</button>
-                                            </td>
-                                        </tr>
+
+
+                                        <?php
+                                        $sql = "SELECT id,first,last,email,contact,subject,message FROM contact";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            // output data of each row
+                                            while ($row = $result->fetch_assoc()) {
+                                                ?>
+
+                                                <tr>
+                                                    <td><?php echo $row["id"] ?></td>
+                                                    <td><?php echo $row["first"] ?></td>
+                                                    <td><?php echo $row["last"] ?></td>
+                                                    <td><?php echo $row["email"] ?></td>
+                                                    <td><?php echo $row["contact"] ?></td>
+                                                    <td><?php echo $row["subject"] ?></td>
+                                                    <td><?php echo $row["message"] ?></td>
+<!--                                                    <td>
+                                                        <button type="button" class="btn btn-warning waves-effect">Update</button>
+                                                    </td>-->
+                                                </tr>
+
+
+
+
+        <?php
+    }
+}
+$conn->close();
+?>
+
+
+
+
+
+
+
+
 
                                     </tbody>
                                 </table>

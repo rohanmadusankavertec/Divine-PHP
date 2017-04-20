@@ -31,14 +31,17 @@ and open the template in the editor.
 
 
             function Send() {
-                
+
+                document.getElementById("successmsg").className = "hidden";
+                document.getElementById("errormsg").className = "hidden";
+                document.getElementById("submitbtn").setAttribute("disabled", "");
                 var first = document.getElementById("first").value;
                 var last = document.getElementById("last").value;
                 var email = document.getElementById("email").value;
                 var contact = document.getElementById("contact").value;
                 var subject = document.getElementById("subject").value;
                 var message = document.getElementById("message").value;
-                alert(message);
+
                 document.getElementById("firste").innerHTML = "";
                 document.getElementById("laste").innerHTML = "";
                 document.getElementById("emaile").innerHTML = "";
@@ -57,23 +60,35 @@ and open the template in the editor.
                     document.getElementById("subjecte").innerHTML = "Please Enter the Subject ...";
                 } else if (message === "") {
                     document.getElementById("messagee").innerHTML = "Please Enter the Messages ...";
-                } else if(!validateEmail(email) ){
+                } else if (!validateEmail(email)) {
                     document.getElementById("emaile").innerHTML = "Please Enter a Valid Email Address ...";
-                } else if(!validatePhone(contact) ){
+                } else if (!validatePhone(contact)) {
                     document.getElementById("contacte").innerHTML = "Please Enter a Valid Contact No ...";
-                }else{
+                } else {
 
                     var xmlHttp = getAjaxObject();
                     xmlHttp.onreadystatechange = function ()
                     {
                         if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
                         {
+                            document.getElementById("submitbtn").removeAttribute("disabled");
                             var reply = xmlHttp.responseText;
-                            alert(reply);
                             if (reply === "Success") {
-                                alert("Success");
+
+
+                                document.getElementById("first").value = "";
+                                document.getElementById("last").value = "";
+                                document.getElementById("email").value = "";
+                                document.getElementById("contact").value = "";
+                                document.getElementById("subject").value = "";
+                                document.getElementById("message").value = "";
+
+
+
+
+                                document.getElementById("successmsg").className = "alert alert-success";
                             } else {
-                                alert("Error");
+                                document.getElementById("errormsg").className = "alert alert-danger";
                             }
                         }
                     };
@@ -119,6 +134,12 @@ and open the template in the editor.
                             <div class="form-horizontal" style="font-size: 16px;letter-spacing: 1px; ">
 
                                 <div class="form-group FormFieldSpacing">
+                                    <div class="hidden" id="successmsg" >
+                                        <strong>Success !</strong> Message Sent Successfully ...
+                                    </div>
+                                    <div class="hidden" id="errormsg">
+                                        <strong>Error !</strong> Something went wrong. Please try again later.
+                                    </div>
                                     <label id="MainContent_lblFirstName" class="col-md-3 control-label">First Name</label>
                                     <div class="col-md-9">
                                         <input type="text" id="first" class="form-control" />
@@ -164,13 +185,13 @@ and open the template in the editor.
                                 <div class="form-group FormFieldSpacing">
                                     <label for="MainContent_txtMessage" id="MainContent_lblMessage" class="col-md-3 control-label">Message</label>
                                     <div class="col-md-9">
-                                        <textarea name="message" rows="5" cols="20" id="message" class="form-control input-sm" placeholder="(Plain text only)"></textarea>
+                                        <textarea style="font-size: 14px;" name="message" rows="5" cols="20" id="message" class="form-control input-sm" placeholder="(Plain text only)"></textarea>
                                         <span style="color: red;" id="messagee"></span>
                                     </div>
                                 </div>
 
                                 <div class="form-group FormFieldSpacing" style="margin-top: 20px;">
-                                    <input class="form-group btn-danger" type="button" onclick="Send()" value="Send Message" style="float: right;border-radius: 3px; margin-right: 20px;"/>
+                                    <input class="form-group btn-danger" id="submitbtn" type="button" onclick="Send()" value="Send Message" style="float: right;border-radius: 3px; margin-right: 20px;"/>
 
                                 </div>
                             </div>
