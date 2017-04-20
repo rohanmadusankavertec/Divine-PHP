@@ -63,8 +63,9 @@ VALUES ('" . $first . "', '" . $last . "', '" . $contact . "', '" . $email . "',
         }
     }
     
-    
-    
-    
     $conn->close();
+}else if($data == "logout"){
+    session_start();
+    session_destroy();
+    header("Location: ../index.php");
 }

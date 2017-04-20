@@ -11,8 +11,10 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        // put your code here
-        //chech................................................
+        session_start();
+        
+        echo $_SESSION['user_type']
+        
         ?>
     </body>
 </html>

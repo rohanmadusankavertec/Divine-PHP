@@ -36,11 +36,44 @@ and open the template in the editor.
     <!-- Page Loader -->
     <?php
     include './admin_header.php';
+    
+    include_once './DBConnection.php';
+    
+    
+    
+    $first="";
+    $last="";
+    $nic="";
+    $gender="";
+    $username="";
+    $password="";
+    $email="";
+    
+    
+                                        $sql = "SELECT id,first,last,nic,gender,username,email FROM admin";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            // output data of each row
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo $row["id"] ;
+                                                
+                                            }
+                                        }
+                                        $conn->close();
+                                        
+    
+    
+    
+    
+    
+    
+    
     ?>
        <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>Profile</h2>
+                <h2>Profile <?php echo $_SESSION['user_id'];?></h2>
             </div>
             <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -56,21 +89,21 @@ and open the template in the editor.
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="First Name" />
+                                                <input type="text" class="form-control" placeholder="First Name" value="<?php echo $first;?>"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="Last Name" />
+                                                <input type="text" class="form-control" placeholder="Last Name" value="<?php echo $last;?>" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="NIC" />
+                                                <input type="text" class="form-control" placeholder="NIC" value="<?php echo $nic;?>" />
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +118,14 @@ and open the template in the editor.
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="Username" />
+                                                <input type="text" class="form-control" placeholder="Email" value="<?php echo $email;?>"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" placeholder="Username" value="<?php echo $username;?>"  />
                                             </div>
                                         </div>
                                     </div>
@@ -94,14 +134,14 @@ and open the template in the editor.
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="password" class="form-control" placeholder="Password" />
+                                                <input type="password" class="form-control" placeholder="Password" value="<?php echo $password;?>"  />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="password" class="form-control" placeholder="Repeat Password" />
+                                                <input type="password" class="form-control" placeholder="Repeat Password"  value="<?php echo $password;?>"/>
                                             </div>
                                         </div>
                                     </div>
