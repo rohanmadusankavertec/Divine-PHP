@@ -32,12 +32,81 @@ and open the template in the editor.
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="admin/css/themes/all-themes.css" rel="stylesheet" />
+    <script>
+    function sendData(){
+        var category = document.getElementById("category").value;
+        var subcate = document.getElementById("subcate").value;
+        var product = document.getElementById("product").value;
+        var price = document.getElementById("price").value;
+        var description = document.getElementById("description").value;
+        var image = document.getElementById("image").value;
+        
+        alert(category);
+        alert(subcate);
+        alert(product);
+        alert(price);
+        alert(description);
+        alert(image);
+                if (category === "") {
+                    document.getElementById("categorys").innerHTML = "Please Select the category Name ...";
+                } else if (subcate === "") {
+                    document.getElementById("subcates").innerHTML = "Please Select the Sub category ...";
+                } else if (product === "") {
+                    document.getElementById("products").innerHTML = "Please Enter the product name ...";
+                } else if (price === "") {
+                    document.getElementById("prices").innerHTML = "Please Enter the Price ...";
+                } else if (description === "") {
+                    document.getElementById("descriptions").innerHTML = "Please Enter the Description ...";
+                } else if (image === "") {
+                    document.getElementById("images").innerHTML = "Please Enter the image ...";
+                
+                } else {
+        
+                    var xmlHttp = getAjaxObject();
+                    xmlHttp.onreadystatechange = function ()
+                    {
+                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                        {
+                            document.getElementById("submitbtn").removeAttribute("disabled");
+                            var reply = xmlHttp.responseText;
+                            if (reply === "Success") {
+
+
+                                document.getElementById("category").value = "";
+                                document.getElementById("subcate").value = "";
+                                document.getElementById("product").value = "";
+                                document.getElementById("price").value = "";
+                                document.getElementById("description").value = "";
+                                document.getElementById("image").value = "";
+
+
+
+
+                                document.getElementById("successmsg").className = "alert alert-success";
+                            } else {
+                                document.getElementById("errormsg").className = "alert alert-danger";
+                            }
+                        }
+                    };
+
+                    xmlHttp.open("POST", "src/Product.php?action=save&category=" + category + "&subcate=" + subcate + "&product=" + product + "&price=" + price + "&description=" + description + "&image=" + image, true);
+                    xmlHttp.send();
+        
+        
+    }
+    
+    </script>
+    
 </head>
 
+    
 <body class="theme-purple">
     <!-- Page Loader -->
     <?php
     include './admin_header.php';
+    
+    include_once './DBConnection.php';
+    $result = mysql_query("SELECT * FROM product ");
     ?>
 
     <section class="content">
@@ -59,49 +128,74 @@ and open the template in the editor.
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
+                                    <form action = "src/Product.php?action=save" method = "POST" enctype = "multipart/form-data">
                                     <div class="col-sm-6">
-                                        <select class="form-control show-tick">
+                                        <select class="form-control show-tick" name="category" id="category">
                                             <option value="">-- Select Category --</option>
                                             <option value="1">Cakes</option>
                                             <option value="2">Pastry & Bakery</option>
                                         </select>
+                                        <span style="color: red;" id="categorys"></span>
                                     </div>
                                     <div class="col-sm-6">
-                                        <select class="form-control show-tick">
+                                        <select class="form-control show-tick" name="subcate" id="subcate">
                                             <option value="">-- Select Sub Category --</option>
                                             <option value="1">Butter Cakes</option>
                                             <option value="2">Fruit Juice</option>
                                         </select>
+                                        <span style="color: red;" id="subcates"></span>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="Product Name" />
+                                                <input type="text" name="product" id="product" class="form-control" placeholder="Product Name" />
                                             </div>
                                         </div>
+                                        <span style="color: red;" id="products"></span>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="number" class="form-control" placeholder="Price" />
+                                                <input type="number" name="price" id="price" class="form-control" placeholder="Price" />
                                             </div>
                                         </div>
+                                        <span style="color: red;" id="prices"></span>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="Description" />
+                                                <input type="text" name="description" id="description" class="form-control" placeholder="Description" />
                                             </div>
                                         </div>
+                                        <span style="color: red;" id="descriptions"></span>
+                                    </div>
+                                        <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="file" name="image" id="image" class="form-control" />
+                                            </div>
+                                        </div>
+                                            <span style="color: red;" id="images"></span>
                                     </div>
                                     <div class="row clearfix demo-button-sizes">
                                 
                                         <div class="col-xs-6 col-sm-3 col-md-2 col-lg-2" style="float: right;">
-                                    <button type="button" class="btn btn-primary waves-effect">Save</button>
+                                            <!--<button type="button" class="btn btn-primary waves-effect">Save</button>-->
+                                            <input type="submit" value="ADD" class="btn btn-primary waves-effect"/>
                                 </div>
                                 
                             </div>
-                           
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="hidden" id="successmsg" >
+                                        <strong>Success !</strong> Message Sent Successfully ...
+                                    </div>
+                                    <div class="hidden" id="errormsg">
+                                        <strong>Error !</strong> Something went wrong. Please try again later.
+                                    </div>
+                                        </div>
+                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -132,7 +226,17 @@ and open the template in the editor.
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php
+                                    while( $row = mysql_fetch_assoc( $result ) ){
+                                                                              
+                                    ?>
                                     <tr>
+                                        <td><?php echo $row['id']; ?></td>
+                                        <td><?php echo $row['category']; ?></td>
+                                        <td><?php echo $row['product']; ?></td>
+                                        <td><?php echo $row['This']; ?></td>
+                                        <td><?php echo $row['This']; ?></td>
+                                        <td><?php echo $row['This']; ?></td>
                                         <td>1</td>
                                         <td>Cake</td>
                                         <td>Butter cake</td>
@@ -144,7 +248,9 @@ and open the template in the editor.
                                             <button type="button" class="btn btn-danger waves-effect">Delete</button>
                                         </td>
                                     </tr>
-                                    
+                                    <?php
+                                    } 
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
