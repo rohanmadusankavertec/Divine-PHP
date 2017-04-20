@@ -10,8 +10,9 @@ if ($data == "save") {
     $gender = $_REQUEST["gender"];
     $username = $_REQUEST["username"];
     $password = $_REQUEST["password"];
-    $sql = "INSERT INTO admin (first, last, nic,gender,username,password)
-VALUES ('" . $first . "', '" . $last . "', '" . $nic . "', '" . $gender . "', '" . $username . "', '" . $password . "')";
+    $email = $_REQUEST["email"];
+    $sql = "INSERT INTO admin (first, last, nic,gender,username,password,email)
+VALUES ('" . $first . "', '" . $last . "', '" . $nic . "', '" . $gender . "', '" . $username . "', '" . $password . "', '" . $email . "')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Success";

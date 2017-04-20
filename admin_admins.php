@@ -31,8 +31,8 @@ and open the template in the editor.
 
         <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
         <link href="admin/css/themes/all-themes.css" rel="stylesheet" />
-        
-        
+
+
         <script type="text/javascript">
             function getAjaxObject() {
                 var xmlHttp;
@@ -44,11 +44,14 @@ and open the template in the editor.
                 }
                 return xmlHttp;
             }
-
+            function validateEmail(email) {
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            }
             function Save() {
- 
+
                 document.getElementById("outputmsg").className = "hidden";
-                
+
                 var first = document.getElementById("first").value;
                 var last = document.getElementById("last").value;
                 var nic = document.getElementById("nic").value;
@@ -56,6 +59,7 @@ and open the template in the editor.
                 var username = document.getElementById("username").value;
                 var password = document.getElementById("password").value;
                 var rpassword = document.getElementById("rpassword").value;
+                var email = document.getElementById("email").value;
                 if (first === "") {
                     document.getElementById("outputmsg").className = "alert alert-warning";
                     document.getElementById("outputmsg").innerHTML = "Please Enter the First Name ...";
@@ -68,16 +72,22 @@ and open the template in the editor.
                 } else if (gender === "") {
                     document.getElementById("outputmsg").className = "alert alert-warning";
                     document.getElementById("outputmsg").innerHTML = "Please select the gender ...";
-                } else if (username === "") {
+                } else if (email === "") {
                     document.getElementById("outputmsg").className = "alert alert-warning";
-                    document.getElementById("outputmsg").innerHTML = "Please Enter the username ...";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the Email Address ...";
+                } else if (!validateEmail(email)) {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter a Valid Email ...";
+                }else if (username === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the Username ...";
                 } else if (password === "") {
                     document.getElementById("outputmsg").className = "alert alert-warning";
                     document.getElementById("outputmsg").innerHTML = "Please Enter the Password ...";
-                }else if (rpassword === "") {
+                } else if (rpassword === "") {
                     document.getElementById("outputmsg").className = "alert alert-warning";
                     document.getElementById("outputmsg").innerHTML = "Please Enter the Repeat Password ...";
-                }else if (password !== rpassword) {
+                } else if (password !== rpassword) {
                     document.getElementById("outputmsg").className = "alert alert-warning";
                     document.getElementById("outputmsg").innerHTML = "Passwords did not matched ...";
                 } else {
@@ -90,19 +100,19 @@ and open the template in the editor.
                             if (reply === "Success") {
                                 document.getElementById("outputmsg").innerHTML = "<strong>Success !</strong> Admin Saved Successfully...";
                                 document.getElementById("outputmsg").className = "alert alert-success";
-                                setTimeout("window.location = 'admin_admins.php';","3000");
+                                setTimeout("window.location = 'admin_admins.php';", "3000");
                             } else {
                                 document.getElementById("outputmsg").innerHTML = "<strong>Error !</strong> Something went wronge...";
                                 document.getElementById("outputmsg").className = "alert alert-danger";
                             }
                         }
                     };
-                    xmlHttp.open("POST", "src/Admins.php?action=save&first=" + first + "&last=" + last + "&nic=" + nic + "&gender=" + gender + "&username=" + username + "&password=" + password+ "&rpassword=" + rpassword, true);
+                    xmlHttp.open("POST", "src/Admins.php?action=save&first=" + first + "&last=" + last + "&nic=" + nic + "&gender=" + gender + "&username=" + username + "&password=" + password + "&rpassword=" + rpassword + "&email=" + email, true);
                     xmlHttp.send();
                 }
             }
         </script>
-        
+
     </head>
     <body class="theme-purple">
         <!-- Page Loader -->
@@ -126,8 +136,8 @@ and open the template in the editor.
                             </div>
                             <div class="body">
                                 <div class="hidden" id="outputmsg">
-                                        <strong>Success !</strong> Admin Saved Successfully ...
-                                    </div>
+                                    <strong>Success !</strong> Admin Saved Successfully ...
+                                </div>
                                 <div class="row clearfix">
                                     <div class="col-sm-6">
                                         <div class="form-group">
@@ -161,12 +171,17 @@ and open the template in the editor.
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
+                                                <input type="text" id="email" class="form-control" placeholder="Email" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
                                                 <input type="text" id="username" class="form-control" placeholder="Username" />
                                             </div>
                                         </div>
                                     </div>
-
-
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
@@ -212,13 +227,14 @@ and open the template in the editor.
                                             <th>Last Name</th>
                                             <th>NIC</th>
                                             <th>Gender</th>
+                                            <th>Email</th>
                                             <th>Username</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         <?php
-                                        $sql = "SELECT id,first,last,nic,gender,username FROM admin";
+                                        $sql = "SELECT id,first,last,nic,gender,username,email FROM admin";
                                         $result = $conn->query($sql);
 
                                         if ($result->num_rows > 0) {
@@ -231,13 +247,16 @@ and open the template in the editor.
                                                     <td><?php echo $row["first"] ?></td>
                                                     <td><?php echo $row["last"] ?></td>
                                                     <td><?php echo $row["nic"] ?></td>
-                                                    <td><?php if ($row["gender"] === "1") {
-                                            echo "Male";
-                                        } else {
-                                            echo "Female";
-                                        } ?></td>
+                                                    <td><?php
+                                                        if ($row["gender"] === "1") {
+                                                            echo "Male";
+                                                        } else {
+                                                            echo "Female";
+                                                        }
+                                                        ?></td>
+                                                    <td><?php echo $row["email"] ?></td>
                                                     <td><?php echo $row["username"] ?></td>
-<!--                                                    <td>
+        <!--                                                    <td>
                                                         <button type="button" class="btn btn-warning waves-effect">Update</button>
                                                     </td>-->
                                                 </tr>
