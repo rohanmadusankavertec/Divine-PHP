@@ -96,44 +96,114 @@ if (isset($_SESSION['user_type'])) {
                 <div class="menu">
                     <ul class="list">
                         <li class="header">MAIN NAVIGATION</li>
-                        <li class="active">
+                        <?php
+                        if(basename($_SERVER['PHP_SELF'])=="admin_dashboard.php"){
+                           ?>
+                            <li class="active">
+                          <?php  
+                        }else{
+                            ?>
+                            <li>
+                          <?php  
+                        }
+                        ?>
                             <a href="admin_dashboard.php">
                                 <i class="material-icons" >home</i>
                                 <span>Home</span>
                             </a>
                         </li>
-                        <li>
+                        <?php
+                        if(basename($_SERVER['PHP_SELF'])=="admin_product.php"){
+                           ?>
+                            <li class="active">
+                          <?php  
+                        }else{
+                            ?>
+                            <li>
+                          <?php  
+                        }
+                        ?>
                             <a href="admin_product.php">
                                 <i class="material-icons">cake</i>
                                 <span>Products</span>
                             </a>
                         </li>
-                        <li>
+                        <?php
+                        if(basename($_SERVER['PHP_SELF'])=="admin_orders.php"){
+                           ?>
+                            <li class="active">
+                          <?php  
+                        }else{
+                            ?>
+                            <li>
+                          <?php  
+                        }
+                        ?>
                             <a href="admin_orders.php">
                                 <i class="material-icons">event_available</i>
                                 <span>Orders</span>
                             </a>
                         </li>
-                        <li>
+                        <?php
+                        if(basename($_SERVER['PHP_SELF'])=="admin_users.php"){
+                           ?>
+                            <li class="active">
+                          <?php  
+                        }else{
+                            ?>
+                            <li>
+                          <?php  
+                        }
+                        ?>
                             <a href="admin_users.php">
                                 <i class="material-icons">person</i>
                                 <span>Users</span>
                             </a>
                         </li>
-                        <li>
+                        <?php
+                        if(basename($_SERVER['PHP_SELF'])=="admin_contact.php"){
+                           ?>
+                            <li class="active">
+                          <?php  
+                        }else{
+                            ?>
+                            <li>
+                          <?php  
+                        }
+                        ?>
                             <a href="admin_contact.php">
                                 <i class="material-icons">mail</i>
                                 <span>Contact</span>
                             </a>
                         </li>
 
-                        <li>
+                        <?php
+                        if(basename($_SERVER['PHP_SELF'])=="admin_admins.php"){
+                           ?>
+                            <li class="active">
+                          <?php  
+                        }else{
+                            ?>
+                            <li>
+                          <?php  
+                        }
+                        ?>
                             <a href="admin_admins.php">
                                 <i class="material-icons">group_add</i>
                                 <span>Admins</span>
                             </a>
                         </li>
-                        <li>
+                        <?php
+                        if(basename($_SERVER['PHP_SELF'])=="admin_profile.php"){
+                           ?>
+                            <li class="active">
+                          <?php  
+                        }else{
+                            ?>
+                            <li>
+                          <?php  
+                        }
+                        ?>
                             <a href="admin_profile.php">
                                 <i class="material-icons">layers</i>
                                 <span>Profile</span>

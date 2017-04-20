@@ -11,10 +11,7 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        session_start();
-        
-        echo $_SESSION['user_type']
-        
+        echo basename($_SERVER['PHP_SELF']);
         ?>
     </body>
 </html>
