@@ -16,7 +16,31 @@ and open the template in the editor.
 
         <?php
         include './Header.php';
+        
+        
+        
+        include_once './src/DBConnection.php';
+        $name = "";
+        $img = "";
+        $description = "";
+        $price = "";
+        $sql = "SELECT name,img,description,price FROM product where id='".$_REQUEST["product"]."'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while ($row = $result->fetch_assoc()) {
+                $name = $row["name"];
+                $img= $row["img"];
+                $description = $row["description"];
+                $price = $row["price"];
+            }
+        }
+        $conn->close();
         ?>
+        
+        
+        
 
 
     <center>
@@ -27,7 +51,7 @@ and open the template in the editor.
         <div class="row">
             <div class="col-xs-6 col-sm-4">
                 <div class="InnerPageContentTitleWrap" style="width: 250px;">
-                    <h1>Order</h1>
+                    <h1>Product Details</h1>
                 </div>
             </div>
         </div>
@@ -44,10 +68,10 @@ and open the template in the editor.
 
 
                                         <li class="active">
-                                            <span id="MainContent_lblProductNameBreadCrumb">Black Forest</span></li>
+                                            <span id="MainContent_lblProductNameBreadCrumb"><?php echo $name; ?></span></li>
                                     </ol>
                                     <h3 class="visible-xs">
-                                        <span id="MainContent_lblProductNameLeft">Black Forest</span></h3>
+                                        <span id="MainContent_lblProductNameLeft"><?php echo $name; ?></span></h3>
                                 </div>
                             </div>
                             <div class="row">
@@ -55,7 +79,7 @@ and open the template in the editor.
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 thumbnail">
                                             <div class="text-center">
-                                                <img id="MainContent_imgProductImage" class="img-responsive img-center" src="img/home_image01.png">
+                                                <img id="MainContent_imgProductImage" class="img-responsive img-center" src="<?php echo $img; ?>">
                                             </div>
 <!--                                            <small>Images are for illustration purposes only, and may not represent actual size or quantity.</small>
                                             <br>-->
@@ -73,13 +97,13 @@ and open the template in the editor.
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <h3 class="hidden-xs">
-                                                <span id="MainContent_lblProductNameRight">Black Forest</span></h3>
+                                                <span id="MainContent_lblProductNameRight"><?php echo $name; ?></span></h3>
                                             <br>
                                             <p style="font-size: 0.9em;">
-                                                <span id="MainContent_lblDescription">The Black Forest gateaux has two layers of 'sugar syrup soaked' chocolate sponge, which is sandwiched  with a layer of fresh cream and black cherries. Topped with a generous  coating of fresh cream, the gateaux is decorated with grated chocolate and red cherries.</span>
+                                                <span id="MainContent_lblDescription"><?php echo $description; ?></span>
                                             </p>
                                             <p>
-                                                Price : Rs.0000.00
+                                                Price : Rs.<?php echo $price; ?>
                                                 <small>
                                                     <span id="MainContent_lblNotes"></span></small>
                                             </p>
@@ -135,9 +159,8 @@ and open the template in the editor.
                                                 <div style="display: inline-block;">
                                                     <label for="MainContent_txtQty" id="MainContent_lblQty" class="text-warning">Qty.</label>
                                                     <input name="ctl00$MainContent$txtQty" type="text" maxlength="2" id="MainContent_txtQty" class="form-control OverrideformControlDisplay" style="width:50px;">
-                                                    &nbsp;<input type="submit" name="ctl00$MainContent$btnAddToOrder" value="Add to Order" onclick="" id="MainContent_btnAddToOrder" class="btn btn-danger">
+                                                    <input type="submit" name="ctl00$MainContent$btnAddToOrder" value="Add to Order" onclick="" id="MainContent_btnAddToOrder" class="btn btn-danger">
                                                 </div>
-                                                <span data-val-controltovalidate="MainContent_txtQty" data-val-errormessage="Please enter a valid Quantity" data-val-display="Dynamic" data-val-validationgroup="valGroupProductDetails" id="MainContent_rfvQty" class="text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;"><br>Please enter a Quantity</span><span data-val-controltovalidate="MainContent_txtQty" data-val-errormessage="Please enter a valid Quantity" data-val-display="Dynamic" data-val-validationgroup="valGroupProductDetails" id="MainContent_regExQty" class="text-danger" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-9]+" style="display:none;"><br>Please enter a valid Quantity</span><br>
                                                 <small><span id="MainContent_lblMinQtyDisplay"></span></small>
                                                 <br>
 
@@ -148,8 +171,6 @@ and open the template in the editor.
 
                                 </div>
                             </div>
-                            <input type="hidden" name="ctl00$MainContent$hfCatName" id="MainContent_hfCatName" value="All">
-                            <input type="hidden" name="ctl00$MainContent$hfGroupName" id="MainContent_hfGroupName" value="0">
                         </div>
 
                     </div>

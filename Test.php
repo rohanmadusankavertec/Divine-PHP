@@ -11,9 +11,16 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        
-        session_start();
-        echo $_SESSION['user_type'];
+       session_start();
+if (isset($_SESSION['user_type'])) {
+    if (!$_SESSION['user_type'] == "admin") {
+        echo 'Not Logedin';
+    }else{
+        echo 'Loged';
+    }
+} else {
+    echo 'Not Logedin';
+}
         ?>
     </body>
 </html>

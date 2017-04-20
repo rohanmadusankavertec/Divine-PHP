@@ -41,7 +41,7 @@ and open the template in the editor.
                             ?>
                             <span id="lblCartLinkOnPhone">Hi <?php echo $_SESSION['first'] ?></span>
                             <a href="ShoppingCart.php" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="lblCartLinkOnPhone">Cart</span></a>
-                            <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Logout</span></a>
+                            <a href="src/Login.php?action=logout" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Logout</span></a>
                            
 
 
