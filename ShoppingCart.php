@@ -1,3 +1,24 @@
+<?php
+session_start();
+if (isset($_SESSION['user_type'])) {
+    if (!$_SESSION['user_type'] == "user") {
+        ?>
+
+        <script>
+            window.location = 'Login.php';
+        </script>
+
+        <?php
+    }
+} else {
+    ?>
+    <script>
+        window.location = 'Login.php';
+    </script>
+
+    <?php
+}
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -8,6 +29,54 @@ and open the template in the editor.
     <head>
         <meta charset="windows-1252">
         <title></title>
+        
+        <script type="text/javascript">
+            function getAjaxObject() {
+                var xmlHttp;
+                if (window.XMLHttpRequest) {
+                    xmlHttp = new XMLHttpRequest();
+                } else
+                {
+                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                return xmlHttp;
+            }
+            function UpdateCart(id) {
+                var qty = document.getElementById("qty"+id).value;
+                if (qty !== "") {
+                    var xmlHttp = getAjaxObject();
+                    xmlHttp.onreadystatechange = function ()
+                    {
+                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                        {
+                            var reply = xmlHttp.responseText;
+                            if (reply === "Success") {
+                                window.location = 'ShoppingCart.php';
+                            } 
+                        }
+                    };
+                    xmlHttp.open("POST", "src/Cart.php?action=update&id=" + id + "&qty=" + qty, true);
+                    xmlHttp.send();
+                }
+            }
+            function DeleteCart(id) {
+                    var xmlHttp = getAjaxObject();
+                    xmlHttp.onreadystatechange = function ()
+                    {
+                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                        {
+                            var reply = xmlHttp.responseText;
+                            if (reply === "Success") {
+                                window.location = 'ShoppingCart.php';
+                            } 
+                        }
+                    };
+                    xmlHttp.open("POST", "src/Cart.php?action=delete&id=" + id , true);
+                    xmlHttp.send();
+            }
+        </script>
+        
+        
     </head>
     <body>
 
@@ -63,18 +132,36 @@ and open the template in the editor.
                         <div style="margin-top: 10px;">
 
 
-                            <div class="row">
+
+
+
+
+
+                            <?php
+                            include_once './src/DBConnection.php';
+                            $sql = "SELECT p.id,p.name,c.qty,p.img,p.price FROM cart c inner join product p on c.product_id=p.id where c.user_id='".$_SESSION["user_id"]."'";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                   ?> 
+                                    
+                                    
+                                    
+                                    
+                                    <div class="row">
 
                                 <div class="col-xs-12 col-sm-3 col-sm-push-2 col-md-3 col-md-push-2">
                                     <br>
                                     <span class="visible-sm visible-md visible-lg"></span>
-                                    <strong>Black Forest (1Kg)</strong><br>
+                                    <strong><?php echo $row["name"];?></strong><br>
                                     <div>
 
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-2 col-sm-pull-3 col-md-2 col-md-pull-3">
-                                    <img id="MainContent_lvCartItems_ctrl0_imgProductThumb_0" class="cartimage" src="img/home_image01.png">
+                                    <img id="MainContent_lvCartItems_ctrl0_imgProductThumb_0" class="cartimage" src="<?php echo $row["img"];?>">
                                 </div>
                                 <div class="col-xs-12 col-sm-2 col-md-2">
                                     <br>
@@ -82,124 +169,38 @@ and open the template in the editor.
                                     <div class="input-group input-group-sm">
                                         <span class="input-group-addon">Qty.</span>
                                         <span>
-                                            <input name="" type="text" value="2" maxlength="2" id="MainContent_lvCartItems_ctrl0_txtQty_0" class="form-control input-sm" style="width:50px;text-align: center; font-weight: bold; font-size: 1em;">
-                                            <a id="MainContent_lvCartItems_ctrl0_lnkbtnUpdateQty_0" class="btn btn-link btn-sm" href="javascript:__doPostBack('ctl00$MainContent$lvCartItems$ctrl0$ctl00$lnkbtnUpdateQty','')">Update</a></span>
+                                            <input name="" type="text" value="<?php echo $row["qty"];?>" maxlength="3" id="qty<?php echo $row["id"];?>" class="form-control input-sm" style="width:50px;text-align: center; font-weight: bold; font-size: 1em;">
+                                            <a onclick="UpdateCart(<?php echo $row["id"];?>)" class="btn btn-link btn-sm">Update</a></span>
                                     </div>
-                                    <!--<span data-val-controltovalidate="MainContent_lvCartItems_ctrl0_txtQty_0" data-val-errormessage="All items in your cart require a valid quantity" data-val-display="Dynamic" data-val-validationgroup="valgroupCartItems" id="MainContent_lvCartItems_ctrl0_rfvItemQty_0" class="text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Required</span><span data-val-controltovalidate="MainContent_lvCartItems_ctrl0_txtQty_0" data-val-errormessage="All items in your cart require a valid quantity" data-val-display="Dynamic" data-val-validationgroup="valgroupCartItems" id="MainContent_lvCartItems_ctrl0_regExQty_0" class="text-danger" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-9]+" style="display:none;">Invalid</span>-->
-
-                                    <input type="hidden" name="" id="MainContent_lvCartItems_ctrl0_hfMinQty_0" value="1">
-                                    <input type="hidden" name="" id="MainContent_lvCartItems_ctrl0_hfMaxQty_0" value="10">
+                                     </div>
+                                <div class="col-xs-12 col-sm-2 col-md-2">
+                                    <br>
+                                    <span class="visible-sm visible-md visible-lg"></span>
+                                    <div class="hidden-xs">Rs. <?php echo $row["price"];?></div>
+                                    <div class="visible-xs">Item Price: Rs.<?php echo $row["price"];?></div>
                                 </div>
                                 <div class="col-xs-12 col-sm-2 col-md-2">
                                     <br>
                                     <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="hidden-xs">Rs. 3,840.00</div>
-                                    <div class="visible-xs">Item Price: Rs.3,840.00</div>
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-md-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="hidden-xs">Rs. 7,680.00</div>
-                                    <div class="visible-xs">Item Total: Rs.7,680.00</div>
+                                    <div class="hidden-xs">Rs. <?php echo (floatval($row["price"])*floatval($row["qty"]))?></div>
+                                    <div class="visible-xs">Item Total: Rs.<?php echo (floatval($row["price"])*floatval($row["qty"]))?></div>
                                 </div>
                                 <div class="col-xs-12 col-sm-1 col-md-1" style="padding-left: 0; padding-right: 0;">
-                                    <a id="MainContent_lvCartItems_ctrl0_lnkbtnRemove_0" class="btn btn-link btn-sm" href="javascript:__doPostBack('ctl00$MainContent$lvCartItems$ctrl0$ctl00$lnkbtnRemove','')"><span class="glyphicon glyphicon-remove-sign"></span><br>Remove</a>
+                                    <a class="btn btn-link btn-sm" onclick="DeleteCart(<?php echo $row["id"];?>)"><span class="glyphicon glyphicon-remove-sign"></span><br>Remove</a>
                                 </div>
 
                             </div>
-
-                            <div class="row">
-
-                                <div class="col-xs-12 col-sm-3 col-sm-push-2 col-md-3 col-md-push-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <strong>Black Forest (1Kg)</strong><br>
-                                    <div>
-
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-sm-pull-3 col-md-2 col-md-pull-3">
-                                    <img id="MainContent_lvCartItems_ctrl0_imgProductThumb_0" class="cartimage" src="img/home_image01.png">
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-md-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="input-group input-group-sm">
-                                        <span class="input-group-addon">Qty.</span>
-                                        <span>
-                                            <input name="" type="text" value="2" maxlength="2" id="MainContent_lvCartItems_ctrl0_txtQty_0" class="form-control input-sm" style="width:50px;text-align: center; font-weight: bold; font-size: 1em;">
-                                            <a id="MainContent_lvCartItems_ctrl0_lnkbtnUpdateQty_0" class="btn btn-link btn-sm" href="javascript:__doPostBack('ctl00$MainContent$lvCartItems$ctrl0$ctl00$lnkbtnUpdateQty','')">Update</a></span>
-                                    </div>
-                                    <!--<span data-val-controltovalidate="MainContent_lvCartItems_ctrl0_txtQty_0" data-val-errormessage="All items in your cart require a valid quantity" data-val-display="Dynamic" data-val-validationgroup="valgroupCartItems" id="MainContent_lvCartItems_ctrl0_rfvItemQty_0" class="text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Required</span><span data-val-controltovalidate="MainContent_lvCartItems_ctrl0_txtQty_0" data-val-errormessage="All items in your cart require a valid quantity" data-val-display="Dynamic" data-val-validationgroup="valgroupCartItems" id="MainContent_lvCartItems_ctrl0_regExQty_0" class="text-danger" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-9]+" style="display:none;">Invalid</span>-->
-
-                                    <input type="hidden" name="" id="MainContent_lvCartItems_ctrl0_hfMinQty_0" value="1">
-                                    <input type="hidden" name="" id="MainContent_lvCartItems_ctrl0_hfMaxQty_0" value="10">
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-md-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="hidden-xs">Rs. 3,840.00</div>
-                                    <div class="visible-xs">Item Price: Rs.3,840.00</div>
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-md-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="hidden-xs">Rs. 7,680.00</div>
-                                    <div class="visible-xs">Item Total: Rs.7,680.00</div>
-                                </div>
-                                <div class="col-xs-12 col-sm-1 col-md-1" style="padding-left: 0; padding-right: 0;">
-                                    <a id="MainContent_lvCartItems_ctrl0_lnkbtnRemove_0" class="btn btn-link btn-sm" href="javascript:__doPostBack('ctl00$MainContent$lvCartItems$ctrl0$ctl00$lnkbtnRemove','')"><span class="glyphicon glyphicon-remove-sign"></span><br>Remove</a>
-                                </div>
-
-                            </div>
-                            <div class="row">
-
-                                <div class="col-xs-12 col-sm-3 col-sm-push-2 col-md-3 col-md-push-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <strong>Black Forest (1Kg)</strong><br>
-                                    <div>
-
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-sm-pull-3 col-md-2 col-md-pull-3">
-                                    <img id="MainContent_lvCartItems_ctrl0_imgProductThumb_0" class="cartimage" src="img/home_image01.png">
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-md-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="input-group input-group-sm">
-                                        <span class="input-group-addon">Qty.</span>
-                                        <span>
-                                            <input name="" type="text" value="2" maxlength="2" id="MainContent_lvCartItems_ctrl0_txtQty_0" class="form-control input-sm" style="width:50px;text-align: center; font-weight: bold; font-size: 1em;">
-                                            <a id="MainContent_lvCartItems_ctrl0_lnkbtnUpdateQty_0" class="btn btn-link btn-sm" href="javascript:__doPostBack('ctl00$MainContent$lvCartItems$ctrl0$ctl00$lnkbtnUpdateQty','')">Update</a></span>
-                                    </div>
-                                    <!--<span data-val-controltovalidate="MainContent_lvCartItems_ctrl0_txtQty_0" data-val-errormessage="All items in your cart require a valid quantity" data-val-display="Dynamic" data-val-validationgroup="valgroupCartItems" id="MainContent_lvCartItems_ctrl0_rfvItemQty_0" class="text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Required</span><span data-val-controltovalidate="MainContent_lvCartItems_ctrl0_txtQty_0" data-val-errormessage="All items in your cart require a valid quantity" data-val-display="Dynamic" data-val-validationgroup="valgroupCartItems" id="MainContent_lvCartItems_ctrl0_regExQty_0" class="text-danger" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-9]+" style="display:none;">Invalid</span>-->
-
-                                    <input type="hidden" name="" id="MainContent_lvCartItems_ctrl0_hfMinQty_0" value="1">
-                                    <input type="hidden" name="" id="MainContent_lvCartItems_ctrl0_hfMaxQty_0" value="10">
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-md-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="hidden-xs">Rs. 3,840.00</div>
-                                    <div class="visible-xs">Item Price: Rs.3,840.00</div>
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-md-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="hidden-xs">Rs. 7,680.00</div>
-                                    <div class="visible-xs">Item Total: Rs.7,680.00</div>
-                                </div>
-                                <div class="col-xs-12 col-sm-1 col-md-1" style="padding-left: 0; padding-right: 0;">
-                                    <a id="MainContent_lvCartItems_ctrl0_lnkbtnRemove_0" class="btn btn-link btn-sm" href="javascript:__doPostBack('ctl00$MainContent$lvCartItems$ctrl0$ctl00$lnkbtnRemove','')"><span class="glyphicon glyphicon-remove-sign"></span><br>Remove</a>
-                                </div>
-
-                            </div>
-
-
-
-
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    <?php
+                                }
+                            }
+                            $conn->close();
+                            ?>
 
 
 
@@ -228,20 +229,20 @@ and open the template in the editor.
                             <div class="row CartTotalsMargin">
                                 <div class="col-xs-5 col-sm-6 col-md-6">Sub Total</div>
                                 <div class="col-xs-7 col-sm-6 col-md-6">
-                                    <span id="MainContent_lblCartSubTotal">: Rs. 7,680.00</span>
+                                    <span id="MainContent_lblCartSubTotal">: Rs. <?php
+                                    include './src/DBConnection.php';
+                                    $sql = "SELECT sum(price) from cart c inner join product p on c.product_id=p.id where c.user_id='".$_SESSION["user_id"]."'";
+                                    $result = $conn->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo $row["sum(price)"];
+                                        }
+                                    }
+                                    $conn->close();
+                                    ?></span>
                                 </div>
                             </div>
-                            <div id="MainContent_divTotalsDiscount" class="row CartTotalsMargin" style="display:none;">
-                                <div class="col-xs-5 col-sm-6 col-md-6">Discount</div>
-                                <div class="col-xs-7 col-sm-6 col-md-6">
-                                    <span id="MainContent_lblCartDiscount">: Rs. 0.00</span>
-                                </div>
-                            </div><div id="MainContent_divDiscountedTotal" class="row CartTotalsMargin" style="display:none;">
-                                <div class="col-xs-5 col-sm-6 col-md-6">Discounted Total</div>
-                                <div class="col-xs-7 col-sm-6 col-md-6">
-                                    <span id="MainContent_lblCartDiscountedTotal">: Rs. 7,680.00</span>
-                                </div>
-                            </div>
+                            
                             <div class="row CartTotalsMargin">
                                 <div class="col-xs-5 col-sm-6 col-md-6">Delivery Estimate</div>
                                 <div class="col-xs-7 col-sm-6 col-md-6">
@@ -252,7 +253,17 @@ and open the template in the editor.
                                 <div class="col-xs-5 col-sm-6 col-md-6"><strong>Order Total</strong></div>
                                 <div class="col-xs-7 col-sm-6 col-md-6">
                                     <strong>
-                                        <span id="MainContent_lblCartOrderTotal">: Rs. 7,680.00</span></strong>
+                                        <span id="MainContent_lblCartOrderTotal">: Rs. <?php
+                                    include './src/DBConnection.php';
+                                    $sql = "SELECT sum(price) from cart c inner join product p on c.product_id=p.id where c.user_id='".$_SESSION["user_id"]."'";
+                                    $result = $conn->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo $row["sum(price)"];
+                                        }
+                                    }
+                                    $conn->close();
+                                    ?></span></strong>
                                 </div>
                             </div>
                         </div>

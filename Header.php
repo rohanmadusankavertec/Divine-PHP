@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -7,11 +9,9 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-         <!-- Latest compiled and minified CSS -->
-         <?php
-         define("LAYOUT_URL","http://localhost/divine/");
-         ?>
-        <link rel="stylesheet" href="<?php echo LAYOUT_URL;?>boostrap/css/bootstrap.min.css">
+        <!-- Latest compiled and minified CSS -->
+
+        <link rel="stylesheet" href="boostrap/css/bootstrap.min.css">
 
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -19,23 +19,58 @@ and open the template in the editor.
         <!-- Latest compiled JavaScript -->
         <script src="boostrap/js/bootstrap.min.js"></script>
 
-        <link rel="stylesheet" href="<?php echo LAYOUT_URL;?>css/mainmenu.css"/>
+        <link rel="stylesheet" href="css/mainmenu.css"/>
 
-        <link rel="shortcut icon" href="<?php echo LAYOUT_URL;?>img/divine.ico"/>
+        <link rel="shortcut icon" href="img/divine.ico"/>
 
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
 
         <!--<link rel="stylesheet" type="text/css" href="css/slider.css">-->
-        <link href="<?php echo LAYOUT_URL;?>css/home.css" rel="stylesheet"/>
+        <link href="css/home.css" rel="stylesheet"/>
     </head>
     <body>
         <div class="container" >
             <div class="nav navbar-right" style="float: right; padding: 10px 10px 0 0;" id="submenuforci">
                 <div id="UpdatePanelCartTotalBadgePhone">
 
-                    <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Login</span></a>
-                    <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> <span id="lblCartLinkOnPhone">Register</span></a>
-                    <a href="ShoppingCart.php" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="lblCartLinkOnPhone">Cart</span></a>
+
+                    <?php
+                    
+                    if (isset($_SESSION['user_type'])) {
+                        if ($_SESSION['user_type'] == "user") {
+                            ?>
+                            <span id="lblCartLinkOnPhone">Hi <?php echo $_SESSION['first'] ?></span>
+                            <a href="ShoppingCart.php" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="lblCartLinkOnPhone">Cart</span></a>
+                            <a href="src/Login.php?action=logout" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Logout</span></a>
+                           
+
+
+                            <?php
+                        } else {
+                            ?>
+                            <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Login</span></a>
+                            <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> <span id="lblCartLinkOnPhone">Register</span></a>
+
+
+
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Login</span></a>
+                        <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> <span id="lblCartLinkOnPhone">Register</span></a>
+
+                        <?php
+                    }
+                    ?>
+
+
+
+
+
+
+
+
 
                 </div>
             </div>
