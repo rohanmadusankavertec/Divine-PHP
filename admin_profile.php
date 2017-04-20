@@ -31,16 +31,98 @@ and open the template in the editor.
 
         <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
         <link href="admin/css/themes/all-themes.css" rel="stylesheet" />
+        
+        
+        
+        
+        <script type="text/javascript">
+            function getAjaxObject() {
+                var xmlHttp;
+                if (window.XMLHttpRequest) {
+                    xmlHttp = new XMLHttpRequest();
+                } else
+                {
+                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                return xmlHttp;
+            }
+            function validateEmail(email) {
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            }
+            
+            function Update() {
+                document.getElementById("outputmsg").className = "hidden";
+
+                var first = document.getElementById("first").value;
+                var last = document.getElementById("last").value;
+                var nic = document.getElementById("nic").value;
+                var gender = document.getElementById("gender").value;
+                var username = document.getElementById("username").value;
+                var password = document.getElementById("password").value;
+                var rpassword = document.getElementById("rpassword").value;
+                var email = document.getElementById("email").value;
+                if (first === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the First Name ...";
+                } else if (last === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the Last Name ...";
+                } else if (nic === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the NIC Number ...";
+                } else if (gender === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please select the gender ...";
+                } else if (email === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the Email Address ...";
+                } else if (!validateEmail(email)) {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter a Valid Email ...";
+                }else if (username === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the Username ...";
+                } else if (password === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the Password ...";
+                } else if (rpassword === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the Repeat Password ...";
+                } else if (password !== rpassword) {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Passwords did not matched ...";
+                } else {
+                    var xmlHttp = getAjaxObject();
+                    xmlHttp.onreadystatechange = function ()
+                    {
+                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                        {
+                            var reply = xmlHttp.responseText;
+                            if (reply === "Success") {
+                                document.getElementById("outputmsg").innerHTML = "<strong>Success !</strong> Profile Updated Successfully...";
+                                document.getElementById("outputmsg").className = "alert alert-success";
+                                setTimeout("window.location = 'admin_profile.php';", "3000");
+                            } else {
+                                document.getElementById("outputmsg").innerHTML = "<strong>Error !</strong> Something went wronge...";
+                                document.getElementById("outputmsg").className = "alert alert-danger";
+                            }
+                        }
+                    };
+                    xmlHttp.open("POST", "src/Admins.php?action=update&first=" + first + "&last=" + last + "&nic=" + nic + "&gender=" + gender + "&username=" + username + "&password=" + password  + "&email=" + email, true);
+                    xmlHttp.send();
+                }
+            }
+        </script>
+        
+        
+        
     </head>
     <body class="theme-purple">
         <!-- Page Loader -->
         <?php
         include './admin_header.php';
-
         include_once './src/DBConnection.php';
-
-
-
         $first = "";
         $last = "";
         $nic = "";
@@ -48,8 +130,6 @@ and open the template in the editor.
         $email = "";
         $username = "";
         $password = "";
-
-
         $sql = "SELECT id,first,last,nic,gender,username,email,password FROM admin";
         $result = $conn->query($sql);
 
@@ -83,29 +163,31 @@ and open the template in the editor.
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
+                                    <div class="hidden" id="outputmsg">
+                                </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="First Name" value="<?php echo $first; ?>"/>
+                                                <input type="text" id="first" class="form-control" placeholder="First Name" value="<?php echo $first; ?>"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="Last Name" value="<?php echo $last; ?>" />
+                                                <input type="text" id="last" class="form-control" placeholder="Last Name" value="<?php echo $last; ?>" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="NIC" value="<?php echo $nic; ?>" />
+                                                <input type="text" id="nic" class="form-control" placeholder="NIC" value="<?php echo $nic; ?>" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <select class="form-control show-tick">
+                                        <select class="form-control show-tick" id="gender">
                                             <option value="">-- Select Gender --</option>
 
                                             <?php
@@ -135,14 +217,14 @@ and open the template in the editor.
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="Email" value="<?php echo $email; ?>"  />
+                                                <input type="text" id="email" class="form-control" placeholder="Email" value="<?php echo $email; ?>"  />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" placeholder="Username" value="<?php echo $username; ?>"  />
+                                                <input type="text" id="username" class="form-control" placeholder="Username" value="<?php echo $username; ?>"  />
                                             </div>
                                         </div>
                                     </div>
@@ -151,14 +233,14 @@ and open the template in the editor.
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="password" class="form-control" placeholder="Password" value="<?php echo $password; ?>"/>
+                                                <input type="password" id="password" class="form-control" placeholder="Password" value="<?php echo $password; ?>"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="password" class="form-control" placeholder="Repeat Password"  value="<?php echo $password; ?>"/>
+                                                <input type="password" id="rpassword" class="form-control" placeholder="Repeat Password"  value="<?php echo $password; ?>"/>
                                             </div>
                                         </div>
                                     </div>
@@ -166,7 +248,7 @@ and open the template in the editor.
                                     <div class="row clearfix demo-button-sizes">
 
                                         <div class="col-xs-6 col-sm-3 col-md-2 col-lg-2" style="float: right;">
-                                            <button type="button" class="btn btn-primary waves-effect">Update</button>
+                                            <button type="button" class="btn btn-primary waves-effect" onclick="Update();">Update</button>
                                         </div>
 
                                     </div>

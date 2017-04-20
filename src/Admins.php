@@ -21,4 +21,19 @@ VALUES ('" . $first . "', '" . $last . "', '" . $nic . "', '" . $gender . "', '"
     }
 
     $conn->close();
+}else if ($data == "update") {
+    $first = $_REQUEST["first"];
+    $last = $_REQUEST["last"];
+    $nic = $_REQUEST["nic"];
+    $gender = $_REQUEST["gender"];
+    $username = $_REQUEST["username"];
+    $password = $_REQUEST["password"];
+    $email = $_REQUEST["email"];
+    $sql = "UPDATE admin SET first='" . $first . "',last='" . $last . "',nic='" . $nic . "',gender='" . $gender . "',username='" . $username . "',password='" . $password . "',email='" . $email . "'";
+    if ($conn->query($sql) === TRUE) {
+        echo "Success";
+    } else {
+        echo "Error ".mysqli_error($conn);
+    }
+    $conn->close();
 }

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -122,14 +125,9 @@ and open the template in the editor.
         </script>
     </head>
     <body>
-
         <?php
         include './Header.php';
         ?>
-
-
-
-
     <center>
         <div id="MainContent_bgTopLarge" class="hidden-xs" style="height: 500px; width:93%; overflow: hidden;  z-index: -5; background: #fff url('img/PageImage9.png') no-repeat top center;"></div>
     </center>
