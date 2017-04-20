@@ -46,37 +46,41 @@ and open the template in the editor.
             }
 
             function Save() {
-
+ 
                 document.getElementById("outputmsg").className = "hidden";
-                document.getElementById("errormsg").className = "hidden";
+                
                 var first = document.getElementById("first").value;
                 var last = document.getElementById("last").value;
                 var nic = document.getElementById("nic").value;
                 var gender = document.getElementById("gender").value;
-                var subject = document.getElementById("username").value;
+                var username = document.getElementById("username").value;
                 var password = document.getElementById("password").value;
                 var rpassword = document.getElementById("rpassword").value;
-
-                document.getElementById("firste").innerHTML = "";
-                document.getElementById("laste").innerHTML = "";
-                document.getElementById("emaile").innerHTML = "";
-                document.getElementById("contacte").innerHTML = "";
-                document.getElementById("subjecte").innerHTML = "";
-                document.getElementById("messagee").innerHTML = "";
                 if (first === "") {
-                    document.getElementById("firste").innerHTML = "Please Enter the First Name ...";
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the First Name ...";
                 } else if (last === "") {
-                    document.getElementById("laste").innerHTML = "Please Enter the Last Name ...";
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the Last Name ...";
                 } else if (nic === "") {
-                    document.getElementById("emaile").innerHTML = "Please Enter the NIC Number ...";
-                } else if (contact === "") {
-                    document.getElementById("contacte").innerHTML = "Please Enter the Contact no ...";
-                } else if (subject === "") {
-                    document.getElementById("subjecte").innerHTML = "Please Enter the Subject ...";
-                } else if (message === "") {
-                    document.getElementById("messagee").innerHTML = "Please Enter the Messages ...";
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the NIC Number ...";
+                } else if (gender === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please select the gender ...";
+                } else if (username === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the username ...";
+                } else if (password === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the Password ...";
+                }else if (rpassword === "") {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Please Enter the Repeat Password ...";
+                }else if (password !== rpassword) {
+                    document.getElementById("outputmsg").className = "alert alert-warning";
+                    document.getElementById("outputmsg").innerHTML = "Passwords did not matched ...";
                 } else {
-
                     var xmlHttp = getAjaxObject();
                     xmlHttp.onreadystatechange = function ()
                     {
@@ -84,21 +88,19 @@ and open the template in the editor.
                         {
                             var reply = xmlHttp.responseText;
                             if (reply === "Success") {
-
-                                document.getElementById("successmsg").className = "alert alert-success";
+                                document.getElementById("outputmsg").innerHTML = "<strong>Success !</strong> Admin Saved Successfully...";
+                                document.getElementById("outputmsg").className = "alert alert-success";
+                                setTimeout("window.location = 'admin_admins.php';","3000");
                             } else {
-                                document.getElementById("errormsg").className = "alert alert-danger";
+                                document.getElementById("outputmsg").innerHTML = "<strong>Error !</strong> Something went wronge...";
+                                document.getElementById("outputmsg").className = "alert alert-danger";
                             }
                         }
                     };
-
-                    xmlHttp.open("POST", "src/Admins.php?action=save&first=" + first + "&last=" + last + "&email=" + email + "&contact=" + contact + "&subject=" + subject + "&message=" + message, true);
+                    xmlHttp.open("POST", "src/Admins.php?action=save&first=" + first + "&last=" + last + "&nic=" + nic + "&gender=" + gender + "&username=" + username + "&password=" + password+ "&rpassword=" + rpassword, true);
                     xmlHttp.send();
                 }
             }
-
-
-
         </script>
         
     </head>
@@ -130,36 +132,36 @@ and open the template in the editor.
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" name="first" class="form-control" placeholder="First Name" />
+                                                <input type="text" id="first" class="form-control" placeholder="First Name" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" name="last" class="form-control" placeholder="Last Name" />
+                                                <input type="text" id="last" class="form-control" placeholder="Last Name" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" name="nic" class="form-control" placeholder="NIC" />
+                                                <input type="text" id="nic" class="form-control" placeholder="NIC" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <select class="form-control show-tick" name="gender">
+                                        <select class="form-control show-tick" id="gender">
                                             <option value="">-- Select Gender --</option>
                                             <option value="1">Male</option>
-                                            <option value="2">Female</option>
+                                            <option value="0">Female</option>
                                         </select>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" name="username" class="form-control" placeholder="Username" />
+                                                <input type="text" id="username" class="form-control" placeholder="Username" />
                                             </div>
                                         </div>
                                     </div>
@@ -168,21 +170,21 @@ and open the template in the editor.
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="password" name="password" class="form-control" placeholder="Password" />
+                                                <input type="password" id="password" class="form-control" placeholder="Password" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="password" name="rpassword" class="form-control" placeholder="Repeat Password" />
+                                                <input type="password" id="rpassword" class="form-control" placeholder="Repeat Password" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row clearfix demo-button-sizes">
                                         <div class="col-xs-6 col-sm-3 col-md-2 col-lg-2" style="float: right;">
-                                            <button type="button" onclick="Save()" class="btn btn-primary waves-effect">Save</button>
+                                            <button type="button" onclick="Save();" class="btn btn-primary waves-effect">Save</button>
                                         </div>
 
                                     </div>
@@ -211,7 +213,6 @@ and open the template in the editor.
                                             <th>NIC</th>
                                             <th>Gender</th>
                                             <th>Username</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -236,14 +237,10 @@ and open the template in the editor.
                                             echo "Female";
                                         } ?></td>
                                                     <td><?php echo $row["username"] ?></td>
-                                                    <td>
+<!--                                                    <td>
                                                         <button type="button" class="btn btn-warning waves-effect">Update</button>
-                                                    </td>
+                                                    </td>-->
                                                 </tr>
-
-
-
-
                                                 <?php
                                             }
                                         }

@@ -6,12 +6,12 @@ if ($data == "save") {
 
     $first = $_REQUEST["first"];
     $last = $_REQUEST["last"];
-    $email = $_REQUEST["email"];
-    $contact = $_REQUEST["contact"];
-    $subject = $_REQUEST["subject"];
-    $message = $_REQUEST["message"];
-    $sql = "INSERT INTO contact (first, last, email,contact,subject,message)
-VALUES ('" . $first . "', '" . $last . "', '" . $email . "', '" . $contact . "', '" . $subject . "', '" . $message . "')";
+    $nic = $_REQUEST["nic"];
+    $gender = $_REQUEST["gender"];
+    $username = $_REQUEST["username"];
+    $password = $_REQUEST["password"];
+    $sql = "INSERT INTO admin (first, last, nic,gender,username,password)
+VALUES ('" . $first . "', '" . $last . "', '" . $nic . "', '" . $gender . "', '" . $username . "', '" . $password . "')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Success";
