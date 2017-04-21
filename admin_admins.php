@@ -26,6 +26,7 @@ and open the template in the editor.
         <!-- JQuery DataTable Css -->
         <link href="admin/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
+        <link href="admin/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
         <!-- Custom Css -->
         <link href="admin/css/style.css" rel="stylesheet">
 
@@ -78,7 +79,7 @@ and open the template in the editor.
                 } else if (!validateEmail(email)) {
                     document.getElementById("outputmsg").className = "alert alert-warning";
                     document.getElementById("outputmsg").innerHTML = "Please Enter a Valid Email ...";
-                }else if (username === "") {
+                } else if (username === "") {
                     document.getElementById("outputmsg").className = "alert alert-warning";
                     document.getElementById("outputmsg").innerHTML = "Please Enter the Username ...";
                 } else if (password === "") {
@@ -98,12 +99,14 @@ and open the template in the editor.
                         {
                             var reply = xmlHttp.responseText;
                             if (reply === "Success") {
-                                document.getElementById("outputmsg").innerHTML = "<strong>Success !</strong> Admin Saved Successfully...";
-                                document.getElementById("outputmsg").className = "alert alert-success";
+                                swal("Good job!", "Admin Saved Successfully!", "success");
+//                                document.getElementById("outputmsg").innerHTML = "<strong>Success !</strong> Admin Saved Successfully...";
+//                                document.getElementById("outputmsg").className = "alert alert-success";
                                 setTimeout("window.location = 'admin_admins.php';", "3000");
                             } else {
-                                document.getElementById("outputmsg").innerHTML = "<strong>Error !</strong> Something went wronge...";
-                                document.getElementById("outputmsg").className = "alert alert-danger";
+                                swal("Error!", "Something went wronge :)", "error");
+//                                document.getElementById("outputmsg").innerHTML = "<strong>Error !</strong> Something went wronge...";
+//                                document.getElementById("outputmsg").className = "alert alert-danger";
                             }
                         }
                     };
@@ -311,6 +314,14 @@ and open the template in the editor.
         <script src="admin/js/admin.js"></script>
         <script src="admin/js/pages/tables/jquery-datatable.js"></script>
 
+        
+        
+         <!-- SweetAlert Plugin Js -->
+    <script src="admin/plugins/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Custom Js -->
+    <script src="admin/js/pages/ui/dialogs.js"></script>
+        
         <!-- Demo Js -->
         <script src="admin/js/demo.js"></script>
     </body>

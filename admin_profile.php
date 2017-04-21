@@ -23,6 +23,7 @@ and open the template in the editor.
 
         <link href="admin/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
+        <link href="admin/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
         <!-- JQuery DataTable Css -->
         <link href="admin/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
@@ -52,6 +53,7 @@ and open the template in the editor.
             }
             
             function Update() {
+               swal("Good job!", "You clicked the button!", "success");
                 document.getElementById("outputmsg").className = "hidden";
 
                 var first = document.getElementById("first").value;
@@ -100,12 +102,10 @@ and open the template in the editor.
                         {
                             var reply = xmlHttp.responseText;
                             if (reply === "Success") {
-                                document.getElementById("outputmsg").innerHTML = "<strong>Success !</strong> Profile Updated Successfully...";
-                                document.getElementById("outputmsg").className = "alert alert-success";
+                                swal("Good job!", "Updated Profile Successfully!", "success");
                                 setTimeout("window.location = 'admin_profile.php';", "3000");
                             } else {
-                                document.getElementById("outputmsg").innerHTML = "<strong>Error !</strong> Something went wronge...";
-                                document.getElementById("outputmsg").className = "alert alert-danger";
+                                swal("Error!", "Something went wronge :)", "error");
                             }
                         }
                     };
@@ -254,6 +254,7 @@ and open the template in the editor.
                                     </div>
 
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -276,20 +277,16 @@ and open the template in the editor.
         <!-- Waves Effect Plugin Js -->
         <script src="admin/plugins/node-waves/waves.js"></script>
 
-        <!-- Jquery DataTable Plugin Js -->
-        <script src="admin/plugins/jquery-datatable/jquery.dataTables.js"></script>
-        <script src="admin/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+         <!-- SweetAlert Plugin Js -->
+    <script src="admin/plugins/sweetalert/sweetalert.min.js"></script>
 
+    <!-- Custom Js -->
+    <script src="admin/js/pages/ui/dialogs.js"></script>
+         <!-- Bootstrap Notify Plugin Js -->
+    <script src="admin/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+        
         <!-- Custom Js -->
         <script src="admin/js/admin.js"></script>
-        <script src="admin/js/pages/tables/jquery-datatable.js"></script>
 
         <!-- Demo Js -->
         <script src="admin/js/demo.js"></script>

@@ -79,7 +79,7 @@ and open the template in the editor.
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 thumbnail">
                                             <div class="text-center">
-                                                <img id="MainContent_imgProductImage" class="img-responsive img-center" src="<?php echo $img; ?>">
+                                                <img id="MainContent_imgProductImage" class="img-responsive img-center" src="src/images/<?php echo $img; ?>">
                                             </div>
 <!--                                            <small>Images are for illustration purposes only, and may not represent actual size or quantity.</small>
                                             <br>-->

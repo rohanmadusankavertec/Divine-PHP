@@ -243,8 +243,8 @@ and open the template in the editor.
                                 </div>
 
                                 <div class="form-group FormFieldSpacing" style="margin-top: 20px;">
-                                    <div class="col-md-offset-8 col-md-9">
-                                        <a id="MainContent_lnkbtnSubmitMessage" class="btn btn-default btn-danger" onclick="Register();">Register</a>
+                                    <div class=" col-md-10">
+                                        <a id="MainContent_lnkbtnSubmitMessage" class="btn btn-default btn-danger" onclick="Register();" style="float: right;">Register</a>
                                     </div>
                                 </div>
 
