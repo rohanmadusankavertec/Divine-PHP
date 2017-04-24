@@ -81,13 +81,41 @@ and open the template in the editor.
                         swal("Cancelled", "Your Product is safe :)", "error");
                     }
                 });
+            }
 
 
 
 
 
+            function getSubcategory() {
+                $("#subcate").empty();
+                var id = document.getElementById("category").value;
+                var s1 = document.getElementById("subcate");
 
 
+                var t1 = document.createElement("option");
+                t1.value = "";
+                t1.innerHTML = "-- Select Sub Category --";
+                s1.appendChild(t1);
+
+
+
+                var xmlHttp = getAjaxObject();
+                xmlHttp.onreadystatechange = function ()
+                {
+                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                    {
+                        var Obj = JSON.parse(this.responseText);
+                        for (x in Obj) {
+                            var t1 = document.createElement("option");
+                            t1.value = Obj[x][0];
+                            t1.innerHTML = Obj[x][1];
+                            s1.appendChild(t1);
+                        }
+                    }
+                };
+                xmlHttp.open("POST", "src/Product.php?action=getsubcategory&id=" + id, true);
+                xmlHttp.send();
             }
 
         </script>
@@ -123,7 +151,7 @@ and open the template in the editor.
                                 <div class="row clearfix">
                                     <form action = "src/Product.php?action=save" method = "POST" enctype = "multipart/form-data">
                                         <div class="col-sm-6">
-                                            <select class="form-control show-tick" name="category" id="category" required>
+                                            <select class="form-control show-tick" name="category" id="category" required onchange="getSubcategory()">
                                                 <option value="">-- Select Category --</option>
                                                 <option value="1">Cakes</option>
                                                 <option value="2">Pastry & Bakery</option>
@@ -133,8 +161,6 @@ and open the template in the editor.
                                         <div class="col-sm-6">
                                             <select class="form-control show-tick" name="subcate" id="subcate" required>
                                                 <option value="">-- Select Sub Category --</option>
-                                                <option value="1">Butter Cakes</option>
-                                                <option value="2">Fruit Juice</option>
                                             </select>
                                             <span style="color: red;" id="subcates"></span>
                                         </div>
@@ -235,11 +261,11 @@ and open the template in the editor.
                                                     <td><?php echo $row["category"] ?></td>
                                                     <td><?php echo $row["subcategory"] ?></td>
                                                     <td><?php echo $row["name"] ?></td>
-                                                    <td><?php echo $row["price"] ?></td>
+                                                    <td><?php echo "Rs. " . number_format((float) $row["price"], 2, '.', ''); ?></td>
                                                     <td><?php echo $row["description"] ?></td>
                                                     <td>
                                                         <button type="button" class="btn btn-warning waves-effect" style="width: 100px;">Update</button>
-                                                        <button type="button" onclick="Delete(<?php echo $row["id"]?>)" class="btn btn-danger waves-effect" style="width: 100px;">Delete</button>
+                                                        <button type="button" onclick="Delete(<?php echo $row["id"] ?>)" class="btn btn-danger waves-effect" style="width: 100px;">Delete</button>
                                                     </td>
                                                 </tr>
 
