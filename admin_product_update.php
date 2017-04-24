@@ -4,6 +4,30 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php
+include_once './src/DBConnection.php';
+
+
+
+
+
+        $sql = "SELECT p.id,s.category_id,p.subcategory_id,p.name,p.price,p.description,p.img FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where p.id='".$_REQUEST["product"]."'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while ($row = $result->fetch_assoc()) {
+                $pid= $row["id"];
+                $cat= $row["category_id"];
+                $subcat= $row["subcategory_id"];
+                $name= $row["name"];
+                $price= $row["price"];
+                $description= $row["description"];
+                $img= $row["img"];
+            }
+        }
+        $conn->close();
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -26,7 +50,6 @@ and open the template in the editor.
 
         <link href="admin/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
         <!-- JQuery DataTable Css -->
-        <link href="admin/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
         <!-- Custom Css -->
         <link href="admin/css/style.css" rel="stylesheet">
@@ -89,7 +112,7 @@ and open the template in the editor.
                 var id = document.getElementById("category").value;
                 var s1 = document.getElementById("subcate");
                 var t1 = document.createElement("option");
-                
+
                 t1.value = "";
                 t1.innerHTML = "-- Select Sub Category --";
                 s1.appendChild(t1);
@@ -119,9 +142,7 @@ and open the template in the editor.
     <body class="theme-purple">
         <!-- Page Loader -->
         <?php
-        include './admin_header.php';
-
-        include_once './src/DBConnection.php';
+        include_once './admin_header.php';
         ?>
 
         <section class="content">
@@ -143,12 +164,13 @@ and open the template in the editor.
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
-                                    <form action = "src/Product.php?action=save" method = "POST" enctype = "multipart/form-data">
+                                    <form action = "src/Product.php?action=Update" method = "POST" enctype = "multipart/form-data">
                                         <div class="col-sm-6">
                                             <select class="form-control show-tick" name="category" id="category" required onchange="getSubcategory()">
                                                 <option value="">-- Select Category --</option>
                                                 <option value="1">Cakes</option>
                                                 <option value="2">Pastry & Bakery</option>
+                                                <input type="hidden" value="" name="<?php echo $id;?>"/>
                                             </select>
                                             <span style="color: red;" id="categorys"></span>
                                         </div>
@@ -161,7 +183,7 @@ and open the template in the editor.
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="text" name="product" id="product" class="form-control" placeholder="Product Name" required="required"/>
+                                                    <input type="text" value="<?php echo $name;?>" name="product" id="product" class="form-control" placeholder="Product Name" required="required"/>
                                                 </div>
                                             </div>
                                             <span style="color: red;" id="products"></span>
@@ -169,7 +191,7 @@ and open the template in the editor.
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="number" name="price" id="price" class="form-control" placeholder="Price" required="required"/>
+                                                    <input type="number" value="<?php echo $price;?>" name="price" id="price" class="form-control" placeholder="Price" required="required"/>
                                                 </div>
                                             </div>
                                             <span style="color: red;" id="prices"></span>
@@ -177,7 +199,7 @@ and open the template in the editor.
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="text" name="description" id="description" class="form-control" placeholder="Description" required="required"/>
+                                                    <input type="text" value="<?php echo $description;?>" name="description" id="description" class="form-control" placeholder="Description" required="required"/>
                                                 </div>
                                             </div>
                                             <span style="color: red;" id="descriptions"></span>
@@ -185,7 +207,7 @@ and open the template in the editor.
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="file" name="image" id="image" class="form-control" />
+                                                    <input type="file" name="image" value="<?php echo $img;?>" id="image" class="form-control" />
                                                 </div>
                                             </div>
                                             <span style="color: red;" id="images"></span>
@@ -194,20 +216,11 @@ and open the template in the editor.
 
                                             <div class="col-xs-6 col-sm-3 col-md-2 col-lg-2" style="float: right;">
                                                 <!--<button type="button" class="btn btn-primary waves-effect">Save</button>-->
-                                                <input type="submit" value="ADD" class="btn btn-primary waves-effect"/>
+                                                <input type="submit" value="Update" class="btn btn-primary waves-effect"/>
                                             </div>
 
                                         </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <div class="hidden" id="successmsg" >
-                                                    <strong>Success !</strong> Message Sent Successfully ...
-                                                </div>
-                                                <div class="hidden" id="errormsg">
-                                                    <strong>Error !</strong> Something went wrong. Please try again later.
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </form>
                                 </div>
                             </div>
@@ -215,69 +228,6 @@ and open the template in the editor.
                     </div>
                 </div>
                 <!-- #END# Basic Examples -->
-                <!-- Exportable Table -->
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2>
-                                    Product Details
-                                </h2>
-
-                            </div>
-                            <div class="body">
-                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Category</th>
-                                            <th>Sub category</th>
-                                            <th>Product Name</th>
-                                            <th>Price</th>
-                                            <th>Description</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-
-                                        <?php
-                                        $sql = "SELECT p.id,c.category,s.subcategory,p.name,p.price,p.description FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where p.is_valid='1'";
-                                        $result = $conn->query($sql);
-
-                                        if ($result->num_rows > 0) {
-                                            // output data of each row
-                                            while ($row = $result->fetch_assoc()) {
-                                                ?>
-
-                                                <tr>
-                                                    <td><?php echo $row["id"] ?></td>
-                                                    <td><?php echo $row["category"] ?></td>
-                                                    <td><?php echo $row["subcategory"] ?></td>
-                                                    <td><?php echo $row["name"] ?></td>
-                                                    <td><?php echo "Rs. " . number_format((float) $row["price"], 2, '.', ''); ?></td>
-                                                    <td><?php echo $row["description"] ?></td>
-                                                    <td>
-                                                        <button type="button" onclick="window.location = 'admin_product_update.php?product=<?php echo $row["id"] ?>';" class="btn btn-warning waves-effect" style="width: 100px;">Update</button>
-                                                        <button type="button" onclick="Delete(<?php echo $row["id"] ?>)" class="btn btn-danger waves-effect" style="width: 100px;">Delete</button>
-                                                    </td>
-                                                </tr>
-
-
-
-
-                                                <?php
-                                            }
-                                        }
-                                        $conn->close();
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- #END# Exportable Table -->
             </div>
         </section>
 
@@ -296,20 +246,9 @@ and open the template in the editor.
         <!-- Waves Effect Plugin Js -->
         <script src="admin/plugins/node-waves/waves.js"></script>
 
-        <!-- Jquery DataTable Plugin Js -->
-        <script src="admin/plugins/jquery-datatable/jquery.dataTables.js"></script>
-        <script src="admin/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
-        <script src="admin/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
-
         <!-- Custom Js -->
         <script src="admin/js/admin.js"></script>
-        <script src="admin/js/pages/tables/jquery-datatable.js"></script>
+        <!--<script src="admin/js/pages/tables/jquery-datatable.js"></script>-->
 
         <!-- SweetAlert Plugin Js -->
         <script src="admin/plugins/sweetalert/sweetalert.min.js"></script>

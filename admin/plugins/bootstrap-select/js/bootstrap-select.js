@@ -368,6 +368,7 @@
 
       if (typeof id !== 'undefined') {
         this.$button.attr('data-id', id);
+        this.$button.attr('id', id);
         $('label[for="' + id + '"]').click(function (e) {
           e.preventDefault();
           that.$button.focus();
