@@ -49,36 +49,25 @@ and open the template in the editor.
                                 <h2>Bread</h2>
                                 <br /><br >
                                 <table>
-                                    <tr>
-                                        <td style="width: 300px;">Fish Bun</td><td></td><td>Rs.50.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chicken Bun</td><td></td><td>Rs.70.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vegetable Bun</td><td></td><td>Rs.40.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sausage Bun</td><td></td><td>Rs.70.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Egg & Seeni Sambol Bun</td><td></td><td>Rs.70.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Savoury Chicken Bun</td><td></td><td>Rs.100.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chicken Submarine</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Cheese & Tomato Sandwich (2)</td><td></td><td>Rs.140.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fish Sandwich (2)</td><td></td><td>Rs.140.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chicken Sandwich</td><td></td><td>Rs.140.00</td>
-                                    </tr>
+                                    <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Bread' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
                                 </table>
                             </div>
                         </div>
@@ -100,18 +89,25 @@ and open the template in the editor.
                             <h2>Pizza</h2>
                             <br /><br >
                             <table>
-                                <tr>
-                                    <td style="width: 300px;">Chicken Pizza</td><td></td><td>Rs.100.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Sausage Pizza</td><td></td><td>Rs.100.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Vegetable Pizza</td><td></td><td>Rs.100.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Seafood Pizza</td><td></td><td>Rs.150.00</td>
-                                </tr>
+                                <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Pizza' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
                                 
                             </table>
                         </div>
@@ -163,45 +159,25 @@ and open the template in the editor.
                                 <h2>Patties, Rolls & Cutlets</h2>
                                 <br /><br >
                                 <table>
-                                    <tr>
-                                        <td style="width: 300px;">Fish Patty</td><td></td><td>Rs.50.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chicken Patty</td><td></td><td>Rs.70.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vegetable Patty</td><td></td><td>Rs.40.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vegetable Samoosa</td><td></td><td>Rs.60.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fish Roll</td><td></td><td>Rs.50.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chicken Roll</td><td></td><td>Rs.70.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vegetable Roll</td><td></td><td>Rs.40.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mutton Roll</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Creamy Vegetable & Cheese Roll</td><td></td><td>Rs.50.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fish Cutlet</td><td></td><td>Rs.50.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Scotch Egg</td><td></td><td>Rs.70.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vegetable Spring Roll</td><td></td><td>Rs.80.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Seafood Spring Roll</td><td></td><td>Rs.150.00</td>
-                                    </tr>
+                                    <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Patties, Rolls & Cutlets' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
                                 </table>
                             </div>
                         </div>
@@ -226,42 +202,25 @@ and open the template in the editor.
                             <h2>Cocktail Items</h2>
                             <br /><br >
                             <table>
-                                <tr>
-                                    <td style="width: 300px;">Mini Fish Roll</td><td></td><td>Rs.40.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mini Chicken Roll</td><td></td><td>Rs.50.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mini Creamy Vegetable & Cheese Roll</td><td></td><td>Rs.40.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mini Fish Patty</td><td></td><td>Rs.40.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mini Chicken Patty</td><td></td><td>Rs.50.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mini Vegetable Sandwich</td><td></td><td>Rs.50.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mini Sausage Roll</td><td></td><td>Rs.50.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mini Chicken Bouche</td><td></td><td>Rs.50.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mini Cheese Bouche</td><td></td><td>Rs.50.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Stuffed Egg</td><td></td><td>Rs.50.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Chicken Winglet</td><td></td><td>Rs.80.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Chicken BBQ Kebab</td><td></td><td>Rs.150.00</td>
-                                </tr>
+                                <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Cocktail Items' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
                             </table>
                         </div>
                         <div class="col-xs-12 col-md-6">
@@ -306,59 +265,25 @@ and open the template in the editor.
                                 <h2>Pastries & Pies</h2>
                                 <br /><br >
                                 <table>
-                                    <tr>
-                                        <td style="width: 300px;">Bacon (Chicken) & Egg Pastry</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bacon (Chicken) & Cheese Roll</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chicken Pastry</td><td></td><td>Rs.100.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Creamy Chicken Pastry</td><td></td><td>Rs.100.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sausage Pastry</td><td></td><td>Rs.100.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fish Puff</td><td></td><td>Rs.80.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Egg & Seeni Sambol Puff</td><td></td><td>Rs.80.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ham (Chicken) & Mushroom Vol-au-vent</td><td></td><td>Rs.120.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Seafood Vol-au-vent</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chicken & Mushroom Pie</td><td></td><td>Rs.100.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Beef Pie</td><td></td><td>Rs.120.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tandoori Chicken Pie</td><td></td><td>Rs.100.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Creamy Vegetable Pie</td><td></td><td>Rs.100.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fisherman's Pie</td><td></td><td>Rs.120.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mutton Pie</td><td></td><td>Rs.150.00</td>
-                                    </tr>
+                                    <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Pastries & Pies' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
 
 
-
-
-
-
-
-
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
                                 </table>
                             </div>
                         </div>
@@ -378,21 +303,25 @@ and open the template in the editor.
                             <h2>Other Savouries</h2>
                             <br /><br >
                             <table>
-                                <tr>
-                                    <td style="width: 300px;">Stuffed Capsicum</td><td></td><td>Rs.80.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Chicken Quiche</td><td></td><td>Rs.100.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Vegetable Quiche</td><td></td><td>Rs.80.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Cheese & Spinach Cornish</td><td></td><td>Rs.80.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Fish Tart</td><td></td><td>Rs.80.00</td>
-                                </tr>
+                                <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Other Savouries' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
                                 
 
                             </table>
@@ -436,18 +365,25 @@ and open the template in the editor.
                                 <h2>Rice</h2>
                                 <br /><br >
                                 <table>
-                                    <tr>
-                                        <td style="width: 300px;">Special Rice & Curry</td><td></td><td>Rs.350.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Divine Fried Rice</td><td></td><td>Rs.350.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chicken Lamprais</td><td></td><td>Rs.400.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Prawn Lamprais</td><td></td><td>Rs.450.00</td>
-                                    </tr>
+                                    <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Rice' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
                                     
                                 </table>
                             </div>
@@ -464,18 +400,25 @@ and open the template in the editor.
                             <h2>Hot Dogs & Burgers</h2>
                             <br /><br >
                             <table>
-                                <tr>
-                                    <td style="width: 300px;">M.A.X Classic Hot Dog</td><td></td><td>Rs.250.00</td>
-                                </tr>
-                                <tr>
-                                    <td>M.A.X Hot Dog with Mustard & BBQ Sauce</td><td></td><td>Rs.200.00</td>
-                                </tr>
-                                <tr>
-                                    <td>M.A.X Hot Dog with BBQ Sauce</td><td></td><td>Rs.180.00</td>
-                                </tr>
-                                <tr>
-                                    <td> Grilled Chicken Burger</td><td></td><td>Rs.350.00</td>
-                                </tr>
+                                <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Hot Dogs & Burgers' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
                                 
 
                             </table>
@@ -519,18 +462,25 @@ and open the template in the editor.
                                 <h2>Platters</h2>
                                 <br /><br >
                                 <table>
-                                    <tr>
-                                        <td style="width: 300px;">Party Pack</td><td></td><td>Rs.5,500.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Platter for 6</td><td></td><td>Rs.2,400.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Platter for 10</td><td></td><td>Rs.3,950.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Platter for 15</td><td></td><td>Rs.5,900.00</td>
-                                    </tr>
+                                    <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Platters' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
                                     
                                 </table>
                             </div>
@@ -550,33 +500,25 @@ and open the template in the editor.
                             <h2>Beverages, Ice Cream & Fruit Salad</h2>
                             <br /><br >
                             <table>
-                                <tr>
-                                    <td style="width: 300px;">Iced Coffee</td><td></td><td>Rs.150.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Fruit Punch Cordial</td><td></td><td>Rs.100.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Chocolate Milkshake</td><td></td><td>Rs.250.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mango Milkshake</td><td></td><td>Rs.300.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Strawberry Milkshake</td><td></td><td>Rs.250.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Vanilla Milkshake</td><td></td><td>Rs.200.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Banana Milkshake</td><td></td><td>Rs.250.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Fruit Salad</td><td></td><td>Rs.150.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Fruit Salad and Ice Cream</td><td></td><td>Rs.200.00</td>
-                                </tr>
+                                <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Beverages, Ice Cream & Fruit Salad' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
 
                             </table>
                         </div>
@@ -620,54 +562,25 @@ and open the template in the editor.
                                 <h2>Fresh Juice</h2>
                                 <br /><br >
                                 <table>
-                                    <tr>
-                                        <td style="width: 300px;">Anoda Juice</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Apple Juice</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Avocado Juice</td><td></td><td>Rs.170.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Banana Juice</td><td></td><td>Rs.200.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Beli Juice</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Carrot Juice</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lime Juice</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mango Juice</td><td></td><td>Rs.250.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mixed Fruit Juice</td><td></td><td>Rs.170.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nas Naran Juice</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Orange Juice</td><td></td><td>Rs.250.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Papaya Juice</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Passionfruit Juice</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pineapple Juice</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Watermelon Juice</td><td></td><td>Rs.150.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Wood Apple</td><td></td><td>Rs.150.00</td>
-                                    </tr>
+                                    <?php
+                                        include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Fresh Juice' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
                                 </table>
                             </div>
                         </div>
