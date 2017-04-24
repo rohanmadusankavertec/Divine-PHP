@@ -31,26 +31,34 @@ VALUES ('" . $product . "', '" . $description . "', '" . $price . "', '" . $name
     }
 
     $conn->close();
-} else if ($data == "getcategory") {
+} else if ($data == "getsubcategory") {
 
 
-    $category = $_REQUEST["category"];
+    $category = $_REQUEST["id"];
 
-    $sql = "SELECT subcategory FROM subcategory where category_id='".$category."'";
+    $sql = "SELECT id,subcategory FROM subcategory where category_id='" . $category . "'";
     $result = $conn->query($sql);
-
+    $arr = array();
     if ($result->num_rows > 0) {
         // output data of each row
         while ($row = $result->fetch_assoc()) {
-            $row["subcategory"];
+
+//            $myObj->id = $row["id"];
+//            $myObj->name = $row["subcategory"];
+            $pro = array($row["id"],$row["subcategory"]);
+
+
+            array_push($arr, $pro);
         }
     }
+    $myJSON = json_encode($arr);
+    echo $myJSON;
     $conn->close();
-}else if ($data == "delete") {
+} else if ($data == "delete") {
 
 
     $id = $_REQUEST["id"];
-    $sql = "Update product set is_valid='0' where id='".$id."'";
+    $sql = "Update product set is_valid='0' where id='" . $id . "'";
 
     if ($conn->query($sql) === TRUE) {
         echo "Success";
