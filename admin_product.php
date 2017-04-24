@@ -46,9 +46,6 @@ and open the template in the editor.
                 return xmlHttp;
             }
             function Delete(id) {
-
-
-
                 swal({
                     title: "Are you sure?",
                     text: "You will not be able to recover this Product!",
@@ -91,14 +88,10 @@ and open the template in the editor.
                 $("#subcate").empty();
                 var id = document.getElementById("category").value;
                 var s1 = document.getElementById("subcate");
-
-
                 var t1 = document.createElement("option");
                 t1.value = "";
                 t1.innerHTML = "-- Select Sub Category --";
                 s1.appendChild(t1);
-
-
 
                 var xmlHttp = getAjaxObject();
                 xmlHttp.onreadystatechange = function ()
