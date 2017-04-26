@@ -130,7 +130,7 @@ and open the template in the editor.
         $email = "";
         $username = "";
         $password = "";
-        $sql = "SELECT id,first,last,nic,gender,username,email,password FROM admin";
+        $sql = "SELECT id,first,last,nic,gender,username,email,password FROM admin where id='".$_SESSION["user_id"]."'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -206,7 +206,7 @@ and open the template in the editor.
                                                 ?>
                                                 <option value="1">Male</option>
                                                 <option value="0">Female</option>
-
+                                                
                                                 <?php
                                             }
                                             ?>
