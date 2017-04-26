@@ -25,12 +25,7 @@ if (isset($_SESSION['user_type'])) {
     <?php
 }
 ?>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
+
         <div class="page-loader-wrapper">
             <div class="loader">
                 <div class="preloader">
@@ -46,6 +41,11 @@ if (isset($_SESSION['user_type'])) {
                 <p>Please wait...</p>
             </div>
         </div>
+    
+    
+    
+    
+    
         <!-- #END# Page Loader -->
         <!-- Overlay For Sidebars -->
         <div class="overlay"></div>
@@ -113,7 +113,7 @@ if (isset($_SESSION['user_type'])) {
                             </a>
                         </li>
                         <?php
-                        if(basename($_SERVER['PHP_SELF'])=="admin_product.php"){
+                        if(basename($_SERVER['PHP_SELF'])=="admin_product.php" || basename($_SERVER['PHP_SELF'])=="admin_product_update.php"){
                            ?>
                             <li class="active">
                           <?php  
@@ -326,5 +326,3 @@ if (isset($_SESSION['user_type'])) {
             </aside>
             <!-- #END# Right Sidebar -->
         </section>
-    </body>
-</html>

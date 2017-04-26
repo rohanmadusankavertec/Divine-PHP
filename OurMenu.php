@@ -11,8 +11,123 @@ and open the template in the editor.
     <head>
         <meta charset="windows-1252">
         <title></title>
+        <script type="text/javascript">
+            function getAjaxObject() {
+                var xmlHttp;
+                if (window.XMLHttpRequest) {
+                    xmlHttp = new XMLHttpRequest();
+                } else
+                {
+                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                return xmlHttp;
+            }
+            function getSubcategory() {
+                $("#subcate").empty();
+                var id = document.getElementById("category").value;
+                var s1 = document.getElementById("subcate");
+                var t1 = document.createElement("option");
+                t1.value = "0";
+                t1.innerHTML = "-- Select Sub Category --";
+                s1.appendChild(t1);
+                var xmlHttp = getAjaxObject();
+                xmlHttp.onreadystatechange = function ()
+                {
+                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                    {
+                        var Obj = JSON.parse(this.responseText);
+                        for (x in Obj) {
+                            var t1 = document.createElement("option");
+                            t1.value = Obj[x][0];
+                            t1.innerHTML = Obj[x][1];
+                            s1.appendChild(t1);
+                        }
+                        getProducts(1);
+                    }
+                };
+                xmlHttp.open("POST", "src/Product.php?action=getsubcategory&id=" + id, true);
+                xmlHttp.send();
+            }
+            
+            var currentpage=1;
+            var totalpages=0;
+            
+            
+            function getProducts(page) {
+                currentpage=page;
+                $("#products").empty();
+                $("#paginationsection").empty();
+                var cat = document.getElementById("category").value;
+                var sub = document.getElementById("subcate").value;
+                var p = document.getElementById("products");
+                var pagination = document.getElementById("paginationsection");
+                var xmlHttp = getAjaxObject();
+                xmlHttp.onreadystatechange = function ()
+                {
+                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                    {
+                        var Obj = JSON.parse(this.responseText);
+                        for (x in Obj.product) {
+                            var old = p.innerHTML;
+                            var productHTML = "";
+                            if (Obj.product[x][3] === null) {
+                                productHTML = "<div class='col-xs-12 col-sm-12 col-md-6' style='margin: 10px 0 10px 0;'><div class='row'><div class='col-sm-12 col-md-12'><div style='width: 180px; float: left'><input type='image' class='productItemImageimg' src='img/no-image-available.jpg' /></div><div style='margin-left: 183px; padding-top: 20px;'><a href='Product.php?product=" + Obj.product[x][0] + "'><h4>" + Obj.product[x][1] + "</h4></a><div class='text-sm' style='margin-bottom:12px;'> Rs. " + Obj.product[x][2] + "</div><a href='Product.php?product=" + Obj.product[x][0] + "'><u>Details & Pricing</u></a> </div></div></div></div>";
+                            } else {
+                                productHTML = "<div class='col-xs-12 col-sm-12 col-md-6' style='margin: 10px 0 10px 0;'><div class='row'><div class='col-sm-12 col-md-12'><div style='width: 180px; float: left'><input type='image' class='productItemImageimg' src='src/images/" + Obj.product[x][3] + "' /></div><div style='margin-left: 183px; padding-top: 20px;'><a href='Product.php?product=" + Obj.product[x][0] + "'><h4>" + Obj.product[x][1] + "</h4></a><div class='text-sm' style='margin-bottom:12px;'> Rs. " + Obj.product[x][2] + "</div><a href='Product.php?product=" + Obj.product[x][0] + "'><u>Details & Pricing</u></a> </div></div></div></div>";
+                            }
+
+                            p.innerHTML = old + productHTML;
+                        }
+
+                        totalpages=Obj.pages;
+                        if (Obj.pages == 0) {
+                            alert("Empty data set");
+                        } else {
+                            var ul = document.createElement("ul");
+                            ul.className = "pagination";
+                            
+                            
+                            var lie = document.createElement("li");
+                                var ae = document.createElement("a");
+                                ae.innerHTML = "&laquo;";
+                                ae.href="#";
+                                lie.appendChild(ae);
+                                ul.appendChild(lie);
+                            
+                            for (var i = 0; i < Obj.pages; i++) {
+                                
+                                var pn= parseInt(i)+parseInt(1);
+                                var lie = document.createElement("li");
+                                var ae = document.createElement("a");
+                                ae.innerHTML = i + 1;
+                                ae.href="javascript:getProducts('"+pn+"');";
+                                lie.appendChild(ae);
+                                ul.appendChild(lie);
+                                
+                            }
+                            
+                            var lie = document.createElement("li");
+                                var ae = document.createElement("a");
+                                ae.innerHTML = "&raquo;";
+                                ae.href="#";
+                                lie.appendChild(ae);
+                                ul.appendChild(lie);
+                            
+                            pagination.appendChild(ul);
+                        }
+
+                    }
+                };
+                xmlHttp.open("POST", "src/Product.php?action=getproducts&category=" + cat + "&subcategory=" + sub + "&page=" + page, true);
+                xmlHttp.send();
+            }
+
+            function nextPage(){
+                getProducts(page);
+            }
+        </script>
     </head>
-    <body>
+    <body onload="getProducts(1);">
 
         <?php
         include './Header.php';
@@ -50,37 +165,54 @@ and open the template in the editor.
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-5 col-md-4 text-right">
-                        <div id="MainContent_PanelSearch" >
-
-                            <div class="input-group">
-                                <input name="ctl00$MainContent$txtSearch" type="text" id="MainContent_txtSearch" class="form-control input-sm" />
-                                <span class="input-group-btn">
-                                    <a id="MainContent_lnkbtnSearch" class="btn btn-default btn-sm" href="javascript:__doPostBack(&#39;ctl00$MainContent$lnkbtnSearch&#39;,&#39;&#39;)"><span class="glyphicon glyphicon-search"></span> Search</a>
-                                </span>
-                            </div>
-
-                        </div>                        
+                        <!--                        <div id="MainContent_PanelSearch" >
+                        
+                                                    <div class="input-group">
+                                                        <input name="ctl00$MainContent$txtSearch" type="text" id="MainContent_txtSearch" class="form-control input-sm" />
+                                                        <span class="input-group-btn">
+                                                            <a id="MainContent_lnkbtnSearch" class="btn btn-default btn-sm" href="javascript:__doPostBack(&#39;ctl00$MainContent$lnkbtnSearch&#39;,&#39;&#39;)"><span class="glyphicon glyphicon-search"></span> Search</a>
+                                                        </span>
+                                                    </div>
+                        
+                                                </div>                        -->
                     </div>
                 </div>
                 <div class="row row-offcanvas row-offcanvas-left">
                     <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas" id="sidebar" role="navigation">
                         <div id="MainContent_Categories" class="accordion">
-                            <input type="hidden" name="ctl00$MainContent$Categories_AccordionExtender_ClientState" id="MainContent_Categories_AccordionExtender_ClientState" value="0" /><div id="MainContent" class="accordionHeaderSelected">
+                            <!--<input type="hidden" name="ctl00$MainContent$Categories_AccordionExtender_ClientState" id="MainContent_Categories_AccordionExtender_ClientState" value="0" />-->
+                            <div id="MainContent" class="accordionHeaderSelected">
 
-                                <a id="MainContent_lnkBtnMainCatHead_0" href="javascript:__doPostBack(&#39;ctl00$MainContent$Categories_Pane_0_header$lnkBtnMainCatHead&#39;,&#39;&#39;)">Cakes & Sweet Treats</a>
+                                <a id="MainContent_lnkBtnMainCatHead_0" >Search Food</a>
 
                             </div>
                             <div id="MainContent" class="accordionContent" style="display:block;">
 
-                                <ul>
+                                <!--<a id="MainContent_rptMenu_0_lnkBtnGroup_0" >All Cakes</a>-->
+                                Category
+                                <select id="category" class="form-control" onchange="getSubcategory();">
+                                    <option selected="selected" value="0">--All Categories--</option>
+                                    <option value="1">Cakes</option>
+                                    <option value="2">Birthday Cake</option>
+                                </select>
 
-                                    <li>
-                                        <a id="MainContent_rptMenu_0_lnkBtnGroup_0" >All Cakes</a>
-                                    </li>
+
+                                <br>
+
+                                Sub Category
+                                <select id="subcate" class="form-control" onchange="getProducts(1);">
+                                    <option selected="selected" value="0">--All Sub Categories--</option>
 
 
+                                </select>
+                                <br>
 
-                                </ul>
+                                <!--                                        Product
+                                                                        <select id="product" class="form-control">
+                                                                            <option selected="selected" value="">--All Products--</option>
+                                                                            
+                                
+                                                                        </select>-->
 
                             </div>
 
@@ -97,41 +229,26 @@ and open the template in the editor.
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <br />
-
-                                <!--                                <div class="text-right" style="float: right;">
-                                                                    <div>
-                                                                        <span>
-                                                                            <span class="btn btn-link ConsolidateItemsToOnePage" title="Enabling this shows all items in a the selected category in one page."><input id="MainContent_lvProducts_chkShowAllInOnePage" type="checkbox" name="ctl00$MainContent$lvProducts$chkShowAllInOnePage" onclick="javascript:setTimeout( & #39; __doPostBack(\ & #39; ctl00$MainContent$lvProducts$chkShowAllInOnePage\ & #39; , \ & #39; \ & #39; ) & #39; , 0)" /><label for="MainContent_lvProducts_chkShowAllInOnePage"> Show all in one page.</label></span>
-                                                                        </span>
-                                                                        <span class="hidden-xs">
-                                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                        </span>
-                                                                        <span>
-                                                                            <span id="MainContent_lvProducts_DataPagerOnlineProductsTop"><a class="aspNetDisabled pagerButtonsBack">First</a>&nbsp;<a class="aspNetDisabled pagerButtonsBack">Previous</a>&nbsp;<span>1</span>&nbsp;<a href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsTop$ctl01$ctl01&#39;,&#39;&#39;)">2</a>&nbsp;<a href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsTop$ctl01$ctl02&#39;,&#39;&#39;)">3</a>&nbsp;<a href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsTop$ctl01$ctl03&#39;,&#39;&#39;)">4</a>&nbsp;<a class="pagerButtonsForward" href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsTop$ctl02$ctl00&#39;,&#39;&#39;)">Next</a>&nbsp;<a class="pagerButtonsForward" href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsTop$ctl02$ctl01&#39;,&#39;&#39;)">Last</a>&nbsp;</span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>-->
                                 <div class="visible-sm"><br /></div>
                                 <br />
                                 <hr />
 
-                                <div class="row clearfix">
+                                <div class="row clearfix" id="products">
 
                                     <div class="col-xs-12 col-sm-12 col-md-6" style="margin: 10px 0 10px 0;">
                                         <div class="row">
                                             <div class="col-sm-12 col-md-12">
                                                 <div style="width: 180px; float: left">
-                                                    <input type="image" name="" id="MainContent_lvProducts_ctrl0_imgbtnProductThumb_0" class="productItemImageimg" src="products/product_01.jpeg" alt="Black Forest" />
+                                                    <input type="image" class="productItemImageimg" src="products/product_01.jpeg" />
                                                 </div>
                                                 <div style="margin-left: 183px; padding-top: 20px;">
-                                                    <a id="MainContent_lvProducts_ctrl0_lnkbtnProductName_0" href=""><h4>Black Forest</h4></a>
+                                                    <a href=""><h4>Black Forest</h4></a>
                                                     <div class="text-sm" style="margin-bottom:12px;">
                                                         1Kg, Piece
                                                     </div>
 
-                                                    <a id="MainContent_lvProducts_ctrl0_lnkbtnCheckPrice_0" href="Product.html"><u>Details & Pricing</u></a>
+                                                    <a href="Product.html"><u>Details & Pricing</u></a>
                                                 </div>
-                                                <input type="hidden" name="" id="MainContent_lvProducts_ctrl0_hfProductCode_0" value="PCA1001" />
                                             </div>
                                         </div>
                                     </div>
@@ -210,16 +327,28 @@ and open the template in the editor.
                                     </div>
                                 </div>
 
-                                <hr />
+                                <div id="paginationsection">
+                                    <hr />
+<!--                                    <ul class = "pagination">
+                                        <li><a href = "#">&laquo;</a></li>
+                                        <li><a href = "#">1</a></li>
+                                        <li><a href = "#">2</a></li>
+                                        <li><a href = "#">3</a></li>
+                                        <li><a href = "#">4</a></li>
+                                        <li><a href = "#">5</a></li>
+                                        <li><a href = "#">&raquo;</a></li>
+                                    </ul>-->
+                                </div>
+                                
+
+
+
+
                                 <!--                                <div style="float: right;">
                                                                     <span id="MainContent_lvProducts_DataPagerOnlineProductsBottom"><a class="aspNetDisabled pagerButtonsBack">First</a>&nbsp;<a class="aspNetDisabled pagerButtonsBack">Previous</a>&nbsp;<span>1</span>&nbsp;<a href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsBottom$ctl01$ctl01&#39;,&#39;&#39;)">2</a>&nbsp;<a href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsBottom$ctl01$ctl02&#39;,&#39;&#39;)">3</a>&nbsp;<a href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsBottom$ctl01$ctl03&#39;,&#39;&#39;)">4</a>&nbsp;<a class="pagerButtonsForward" href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsBottom$ctl02$ctl00&#39;,&#39;&#39;)">Next</a>&nbsp;<a class="pagerButtonsForward" href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsBottom$ctl02$ctl01&#39;,&#39;&#39;)">Last</a>&nbsp;</span>
                                                                 </div>-->
 
 
-                                <input type="hidden" name="ctl00$MainContent$hfCatID" id="MainContent_hfCatID" />
-                                <input type="hidden" name="ctl00$MainContent$hfCatName" id="MainContent_hfCatName" />
-                                <input type="hidden" name="ctl00$MainContent$hfGroupName" id="MainContent_hfGroupName" />
-                                <input type="hidden" name="ctl00$MainContent$hfConsolidateToAPage" id="MainContent_hfConsolidateToAPage" value="False" />
                             </div>
                         </div>
                     </div>

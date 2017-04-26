@@ -186,6 +186,7 @@ and open the template in the editor.
                                             <div class="form-group">
                                                 <div class="form-line">
                                                     <input type="file" name="image" id="image" class="form-control" />
+                                                     <label class="form-control" >Image Size 460*356</label>
                                                 </div>
                                             </div>
                                             <span style="color: red;" id="images"></span>

@@ -60,18 +60,42 @@ and open the template in the editor.
                                             <th>Email</th>
                                             <th>Contact No</th>
                                             <th>Address</th>
+                                            <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Rohan</td>
-                                            <td>Madusanka</td>
-                                            <td>rohan@gmail.com</td>
-                                            <td>0710000000</td>
-                                            <td>No 123, Galle Rd, Mount Lavinia.</td>
-                                        </tr>
+                                        
 
+                                        <?php
+                                        include_once './src/DBConnection.php';
+                                        $sql = "SELECT o.id,u.first_name,u.last_name,u.email,u.contact_no,o.address,o.date FROM orders o inner join order_item oi on oi.orders_id=o.id inner join user u on u.id=o.user_id";
+                                        $result = $conn->query($sql);
+                                        if ($result->num_rows > 0) {
+                                            // output data of each row
+                                            while ($row = $result->fetch_assoc()) {
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $row["id"] ?></td>
+                                                    <td><?php echo $row["first_name"] ?></td>
+                                                    <td><?php echo $row["last_name"] ?></td>
+                                                    <td><?php echo $row["email"] ?></td>
+                                                    <td><?php echo $row["contact_no"] ?></td>
+                                                    <td><?php echo $row["address"] ?></td>
+                                                    <td><?php echo $row["date"] ?></td>
+<!--                                                    <td>
+                                                        <button type="button" class="btn btn-warning waves-effect">Update</button>
+                                                    </td>-->
+                                                </tr>
+
+
+
+
+        <?php
+    }
+}
+$conn->close();
+?>
+                                        
                                     </tbody>
                                 </table>
                             </div>

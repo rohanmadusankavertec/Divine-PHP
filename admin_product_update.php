@@ -4,7 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<?php
+  <?php
 include_once './src/DBConnection.php';
 
 
@@ -135,15 +135,22 @@ include_once './src/DBConnection.php';
                 xmlHttp.send();
             }
 
+            
+            function setSelect(){
+                document.getElementById("category").value=<?php echo $cat;?>;
+                getSubcategory();
+                setTimeout("document.getElementById('subcate').value=<?php echo $subcat;?>;",500);
+                 
+            }
         </script>
     </head>
 
 
-    <body class="theme-purple">
+    <body class="theme-purple" onload="setSelect()">
         <!-- Page Loader -->
         <?php
         include_once './admin_header.php';
-        ?>
+      ?>
 
         <section class="content">
             <div class="container-fluid">
@@ -160,18 +167,18 @@ include_once './src/DBConnection.php';
                                 <h2>
                                     Product Registration
                                 </h2>
-
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
-                                    <form action = "src/Product.php?action=Update" method = "POST" enctype = "multipart/form-data">
+                                    <form action = "src/Product.php?action=update" method = "POST" enctype = "multipart/form-data">
+                                        <input type="hidden" value="<?php echo $pid;?>" name="id"/>
                                         <div class="col-sm-6">
                                             <select class="form-control show-tick" name="category" id="category" required onchange="getSubcategory()">
                                                 <option value="">-- Select Category --</option>
                                                 <option value="1">Cakes</option>
                                                 <option value="2">Pastry & Bakery</option>
-                                                <input type="hidden" value="" name="<?php echo $id;?>"/>
                                             </select>
+                                                
                                             <span style="color: red;" id="categorys"></span>
                                         </div>
                                         <div class="col-sm-6">
@@ -207,7 +214,9 @@ include_once './src/DBConnection.php';
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="file" name="image" value="<?php echo $img;?>" id="image" class="form-control" />
+                                                    <input type="file" name="image" id="image" class="form-control" />
+                                                    <label class="form-control" >Image Size 460*356</label>
+                                                    <input type="hidden" value="<?php echo $img;?>" name="oldimg"/>
                                                 </div>
                                             </div>
                                             <span style="color: red;" id="images"></span>

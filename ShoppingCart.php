@@ -29,7 +29,7 @@ and open the template in the editor.
     <head>
         <meta charset="windows-1252">
         <title></title>
-        
+
         <script type="text/javascript">
             function getAjaxObject() {
                 var xmlHttp;
@@ -42,7 +42,7 @@ and open the template in the editor.
                 return xmlHttp;
             }
             function UpdateCart(id) {
-                var qty = document.getElementById("qty"+id).value;
+                var qty = document.getElementById("qty" + id).value;
                 if (qty !== "") {
                     var xmlHttp = getAjaxObject();
                     xmlHttp.onreadystatechange = function ()
@@ -52,7 +52,7 @@ and open the template in the editor.
                             var reply = xmlHttp.responseText;
                             if (reply === "Success") {
                                 window.location = 'ShoppingCart.php';
-                            } 
+                            }
                         }
                     };
                     xmlHttp.open("POST", "src/Cart.php?action=update&id=" + id + "&qty=" + qty, true);
@@ -60,23 +60,23 @@ and open the template in the editor.
                 }
             }
             function DeleteCart(id) {
-                    var xmlHttp = getAjaxObject();
-                    xmlHttp.onreadystatechange = function ()
+                var xmlHttp = getAjaxObject();
+                xmlHttp.onreadystatechange = function ()
+                {
+                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
                     {
-                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
-                        {
-                            var reply = xmlHttp.responseText;
-                            if (reply === "Success") {
-                                window.location = 'ShoppingCart.php';
-                            } 
+                        var reply = xmlHttp.responseText;
+                        if (reply === "Success") {
+                            window.location = 'ShoppingCart.php';
                         }
-                    };
-                    xmlHttp.open("POST", "src/Cart.php?action=delete&id=" + id , true);
-                    xmlHttp.send();
+                    }
+                };
+                xmlHttp.open("POST", "src/Cart.php?action=delete&id=" + id, true);
+                xmlHttp.send();
             }
         </script>
-        
-        
+
+
     </head>
     <body>
 
@@ -139,63 +139,79 @@ and open the template in the editor.
 
                             <?php
                             include_once './src/DBConnection.php';
-                            $sql = "SELECT p.id,p.name,c.qty,p.img,p.price FROM cart c inner join product p on c.product_id=p.id where c.user_id='".$_SESSION["user_id"]."'";
+                            $sql = "SELECT p.id,p.name,c.qty,p.img,p.price FROM cart c inner join product p on c.product_id=p.id where c.user_id='" . $_SESSION["user_id"] . "'";
                             $result = $conn->query($sql);
 
                             if ($result->num_rows > 0) {
                                 // output data of each row
                                 while ($row = $result->fetch_assoc()) {
-                                   ?> 
-                                    
-                                    
-                                    
-                                    
+                                    ?> 
+
+
+
+
                                     <div class="row">
 
-                                <div class="col-xs-12 col-sm-3 col-sm-push-2 col-md-3 col-md-push-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <strong><?php echo $row["name"];?></strong><br>
-                                    <div>
+                                        <div class="col-xs-12 col-sm-3 col-sm-push-2 col-md-3 col-md-push-2">
+                                            <br>
+                                            <span class="visible-sm visible-md visible-lg"></span>
+                                            <strong><?php echo $row["name"]; ?></strong><br>
+                                            <div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-sm-pull-3 col-md-2 col-md-pull-3">
+
+
+                                            <?php
+                                            if ($row["img"] == NULL) {
+                                                ?> 
+                                                <img id="MainContent_lvCartItems_ctrl0_imgProductThumb_0" class="cartimage" src="img/no-image-available.jpg">
+
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <img id="MainContent_lvCartItems_ctrl0_imgProductThumb_0" class="cartimage" src="src/images/<?php echo $row["img"]; ?>">
+                                                <?php
+                                            }
+                                            ?>
+
+
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-2">
+                                            <br>
+                                            <span class="visible-sm visible-md visible-lg"></span>
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">Qty.</span>
+                                                <span>
+                                                    <input type="text" value="<?php echo $row["qty"]; ?>" maxlength="3" id="qty<?php echo $row["id"]; ?>" class="form-control input-sm" style="width:50px;text-align: center; font-weight: bold; font-size: 1em;">
+                                                    <a onclick="UpdateCart(<?php echo $row["id"]; ?>)" class="btn btn-link btn-sm">Update</a></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-2">
+                                            <br>
+                                            <span class="visible-sm visible-md visible-lg"></span>
+                                            <div class="hidden-xs">Rs. <?php echo $row["price"]; ?></div>
+                                            <div class="visible-xs">Item Price: Rs.<?php echo $row["price"]; ?></div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-2">
+                                            <br>
+                                            <span class="visible-sm visible-md visible-lg"></span>
+                                            <div class="hidden-xs">Rs. <?php echo (floatval($row["price"]) * floatval($row["qty"])) ?></div>
+                                            <div class="visible-xs">Item Total: Rs.<?php echo (floatval($row["price"]) * floatval($row["qty"])) ?></div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-1 col-md-1" style="padding-left: 0; padding-right: 0;">
+                                            <a class="btn btn-link btn-sm" onclick="DeleteCart(<?php echo $row["id"]; ?>)"><span class="glyphicon glyphicon-remove-sign"></span><br>Remove</a>
+                                        </div>
 
                                     </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-sm-pull-3 col-md-2 col-md-pull-3">
-                                    <img id="MainContent_lvCartItems_ctrl0_imgProductThumb_0" class="cartimage" src="<?php echo $row["img"];?>">
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-md-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="input-group input-group-sm">
-                                        <span class="input-group-addon">Qty.</span>
-                                        <span>
-                                            <input name="" type="text" value="<?php echo $row["qty"];?>" maxlength="3" id="qty<?php echo $row["id"];?>" class="form-control input-sm" style="width:50px;text-align: center; font-weight: bold; font-size: 1em;">
-                                            <a onclick="UpdateCart(<?php echo $row["id"];?>)" class="btn btn-link btn-sm">Update</a></span>
-                                    </div>
-                                     </div>
-                                <div class="col-xs-12 col-sm-2 col-md-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="hidden-xs">Rs. <?php echo $row["price"];?></div>
-                                    <div class="visible-xs">Item Price: Rs.<?php echo $row["price"];?></div>
-                                </div>
-                                <div class="col-xs-12 col-sm-2 col-md-2">
-                                    <br>
-                                    <span class="visible-sm visible-md visible-lg"></span>
-                                    <div class="hidden-xs">Rs. <?php echo (floatval($row["price"])*floatval($row["qty"]))?></div>
-                                    <div class="visible-xs">Item Total: Rs.<?php echo (floatval($row["price"])*floatval($row["qty"]))?></div>
-                                </div>
-                                <div class="col-xs-12 col-sm-1 col-md-1" style="padding-left: 0; padding-right: 0;">
-                                    <a class="btn btn-link btn-sm" onclick="DeleteCart(<?php echo $row["id"];?>)"><span class="glyphicon glyphicon-remove-sign"></span><br>Remove</a>
-                                </div>
 
-                            </div>
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
+
+
+
+
+
                                     <?php
                                 }
                             }
@@ -230,23 +246,28 @@ and open the template in the editor.
                                 <div class="col-xs-5 col-sm-6 col-md-6">Sub Total</div>
                                 <div class="col-xs-7 col-sm-6 col-md-6">
                                     <span id="MainContent_lblCartSubTotal">: Rs. <?php
-                                    include './src/DBConnection.php';
-                                    $sql = "SELECT sum(price) from cart c inner join product p on c.product_id=p.id where c.user_id='".$_SESSION["user_id"]."'";
-                                    $result = $conn->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo $row["sum(price)"];
-                                        }
-                                    }
-                                    $conn->close();
-                                    ?></span>
+                                            include './src/DBConnection.php';
+                                            $sql = "SELECT price,qty from cart c inner join product p on c.product_id=p.id where c.user_id='" . $_SESSION["user_id"] . "'";
+                                            $result = $conn->query($sql);
+                                            $total=0.0;
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+//                                                    echo $row["price"];
+//                                                    echo $row["qty"];
+                                                    $total=  floatval($total)+(floatval($row["price"])*floatval($row["qty"]));
+                                                }
+                                            }
+                                            echo $total;
+                                            $conn->close();
+                                            ?></span>
                                 </div>
                             </div>
-                            
+
                             <div class="row CartTotalsMargin">
                                 <div class="col-xs-5 col-sm-6 col-md-6">Delivery Estimate</div>
                                 <div class="col-xs-7 col-sm-6 col-md-6">
-                                    <span id="MainContent_lblCartDeliveryEstimate">: Rs. 0.00</span>
+                                    <span id="MainContent_lblCartDeliveryEstimate">: Rs. 200.00</span>
+                                    <div class="col-xs-12 col-sm-12 col-md-12" style="font-size: 10px;">(For Colombo 03/04)</div>
                                 </div>
                             </div>
                             <div class="row CartTotalsMargin">
@@ -254,16 +275,20 @@ and open the template in the editor.
                                 <div class="col-xs-7 col-sm-6 col-md-6">
                                     <strong>
                                         <span id="MainContent_lblCartOrderTotal">: Rs. <?php
-                                    include './src/DBConnection.php';
-                                    $sql = "SELECT sum(price) from cart c inner join product p on c.product_id=p.id where c.user_id='".$_SESSION["user_id"]."'";
-                                    $result = $conn->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo $row["sum(price)"];
-                                        }
-                                    }
-                                    $conn->close();
-                                    ?></span></strong>
+                                            include './src/DBConnection.php';
+                                            $sql = "SELECT price,qty from cart c inner join product p on c.product_id=p.id where c.user_id='" . $_SESSION["user_id"] . "'";
+                                            $result = $conn->query($sql);
+                                            $total=200.0;
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+//                                                    echo $row["price"];
+//                                                    echo $row["qty"];
+                                                    $total=  floatval($total)+(floatval($row["price"])*floatval($row["qty"]));
+                                                }
+                                            }
+                                            echo $total;
+                                            $conn->close();
+                                            ?></span></strong>
                                 </div>
                             </div>
                         </div>
@@ -272,7 +297,7 @@ and open the template in the editor.
                 </div>
                 <div class="row" style="margin-top: 10px;">
                     <div class="col-xs-12 col-md-12 text-right">
-                        <a id="MainContent_lnkbtnProceedToCheckout" class="btn btn-default btn-danger" href='javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions("ctl00$MainContent$lnkbtnProceedToCheckout", "", true, "valgroupCartItems", "", false, true))'>Proceed to Checkout  <span class="glyphicon glyphicon-chevron-right"></span></a>
+                        <a id="MainContent_lnkbtnProceedToCheckout" class="btn btn-default btn-danger" href='Checkout.php'>Proceed to Checkout  <span class="glyphicon glyphicon-chevron-right"></span></a>
                     </div>
                 </div>
 
@@ -283,7 +308,7 @@ and open the template in the editor.
             &nbsp;
         </div>
         <div id="MainContent_divEditWordingPanelOpener"></div>
-        <div id="MainContent_PanelEditWordingOnTop" style="display: none; position: fixed; z-index: 100001;">
+<!--        <div id="MainContent_PanelEditWordingOnTop" style="display: none; position: fixed; z-index: 100001;">
 
             <div class="modal-dialog" style="max-width:420px;">
                 <div class="modal-content">
@@ -311,9 +336,9 @@ and open the template in the editor.
                 <div id="MainContent_divEditWordingPanelCloser"></div>
             </div>
 
-        </div>
+        </div>-->
 
-        <div id="MainContent_divNoOrdersOpener"></div>
+<!--        <div id="MainContent_divNoOrdersOpener"></div>
         <div id="MainContent_PanelNoOrders" style="display: none; position: fixed; z-index: 100001;">
 
             <div class="modal-dialog">
@@ -333,9 +358,12 @@ and open the template in the editor.
             </div>
             <div id="MainContent_divNoOrdersCloser"></div>
 
-        </div>
+        </div>-->
 
-        <div id="MainContent_ModalPopupExtenderEditWording_backgroundElement" class="modalBg" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div><div id="MainContent_ModalPopupExtenderNoOrders_backgroundElement" class="modalBg" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div></div>
+<!--        <div id="MainContent_ModalPopupExtenderEditWording_backgroundElement" class="modalBg" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div>
+        <div id="MainContent_ModalPopupExtenderNoOrders_backgroundElement" class="modalBg" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div>
+            -->
+    </div>
 
 
     <?php
