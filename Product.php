@@ -11,6 +11,13 @@ and open the template in the editor.
     <head>
         <meta charset="windows-1252">
         <title></title>
+<!--        <script type="text/javascript" src="js/jquery.elevatezoom.js"/>
+        <script type="text/javascript" src=""/>-->
+        <script src="js/jquery.elevatezoom.js"></script>
+        <script src="js/jquery.elevateZoom-3.0.8.min.js"></script>
+        <script>
+            $("#productimg").elevateZoom({tint: true, tintColour: '#F90', tintOpacity: 0.5});
+        </script>
     </head>
     <body>
 
@@ -83,11 +90,11 @@ and open the template in the editor.
                                                 <?php
                                                 if ($img == "") {
                                                     ?>
-                                                    <img id="MainContent_imgProductImage" class="img-responsive img-center" src="img/no-image-available.jpg">
+                                                    <img id="productimg" class="img-responsive img-center" src="img/no-image-available.jpg">
                                                     <?php
                                                 } else {
                                                     ?>
-                                                    <img id="MainContent_imgProductImage" class="img-responsive img-center" src="src/images/<?php echo $img; ?>">
+                                                    <img id="productimg" class="img-responsive img-center" src="src/images/<?php echo $img; ?>">
                                                     <?php
                                                 }
                                                 ?>
@@ -129,7 +136,7 @@ and open the template in the editor.
                                                 <div style="display: inline-block;">
                                                     <form method="POST" action="src/Cart.php?action=addtocart">
                                                         <label for="MainContent_txtQty" id="MainContent_lblQty" class="text-warning">Qty.</label>
-                                                        <input type="hidden" value="<?php echo $_GET["product"];?>" name="id"/>
+                                                        <input type="hidden" value="<?php echo $_GET["product"]; ?>" name="id"/>
                                                         <input name="qty" type="text" maxlength="4" id="qty" class="form-control OverrideformControlDisplay" style="width:50px;">
                                                         <input type="submit" name="ctl00$MainContent$btnAddToOrder" value="Add to Cart" onclick="" class="btn btn-danger">
                                                     </form>
