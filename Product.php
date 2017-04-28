@@ -122,7 +122,7 @@ and open the template in the editor.
                                                 <span id="MainContent_lblDescription"><?php echo $description; ?></span>
                                             </p>
                                             <p>
-                                                <strong>Price : Rs.<?php echo $price; ?></strong>
+                                                <strong>Price : Rs.<?php echo number_format((float) $price, 2, '.', ''); ?></strong>
                                                 <small>
                                                     <span id="MainContent_lblNotes"></span></small>
                                             </p>
