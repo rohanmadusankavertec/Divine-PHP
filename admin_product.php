@@ -264,9 +264,6 @@ and open the template in the editor.
                                                     </td>
                                                 </tr>
 
-
-
-
                                                 <?php
                                             }
                                         }
