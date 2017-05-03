@@ -193,7 +193,7 @@ and open the template in the editor.
                                 <select id="category" class="form-control" onchange="getSubcategory();">
                                     <option selected="selected" value="0">--All Categories--</option>
                                     <option value="1">Cakes</option>
-                                    <option value="2">Birthday Cake</option>
+                                    <option value="2">Pastry & Bakery</option>
                                 </select>
 
 
@@ -235,96 +235,7 @@ and open the template in the editor.
 
                                 <div class="row clearfix" id="products">
 
-                                    <div class="col-xs-12 col-sm-12 col-md-6" style="margin: 10px 0 10px 0;">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-12">
-                                                <div style="width: 180px; float: left">
-                                                    <input type="image" class="productItemImageimg" src="products/product_01.jpeg" />
-                                                </div>
-                                                <div style="margin-left: 183px; padding-top: 20px;">
-                                                    <a href=""><h4>Black Forest</h4></a>
-                                                    <div class="text-sm" style="margin-bottom:12px;">
-                                                        1Kg, Piece
-                                                    </div>
-
-                                                    <a href="Product.html"><u>Details & Pricing</u></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-12 col-sm-12 col-md-6" style="margin: 10px 0 10px 0;">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-12">
-                                                <div style="width: 180px; float: left">
-                                                    <input type="image" name="" id="MainContent_lvProducts_ctrl0_imgbtnProductThumb_1" class="productItemImageimg" src="products/product_02.jpg" alt="Caramel Cake" />
-                                                </div>
-                                                <div style="margin-left: 183px; padding-top: 20px;">
-                                                    <a id="MainContent_lvProducts_ctrl0_lnkbtnProductName_1" href=""><h4>Caramel Cake</h4></a>
-                                                    <div class="text-sm" style="margin-bottom:12px;">
-                                                        Large, Small, Piece
-                                                    </div>
-
-                                                    <a id="MainContent_lvProducts_ctrl0_lnkbtnCheckPrice_1" href="Product.html"><u>Details & Pricing</u></a>
-                                                </div>
-                                                <input type="hidden" name="" id="MainContent_lvProducts_ctrl0_hfProductCode_1" value="PCA1002" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6" style="margin: 10px 0 10px 0;">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-12">
-                                                <div style="width: 180px; float: left">
-                                                    <input type="image" name="" id="MainContent_lvProducts_ctrl0_imgbtnProductThumb_1" class="productItemImageimg" src="products/product_03.jpg" alt="Caramel Cake" />
-                                                </div>
-                                                <div style="margin-left: 183px; padding-top: 20px;">
-                                                    <a id="MainContent_lvProducts_ctrl0_lnkbtnProductName_1" href=""><h4>Caramel Cake</h4></a>
-                                                    <div class="text-sm" style="margin-bottom:12px;">
-                                                        Large, Small, Piece
-                                                    </div>
-
-                                                    <a id="MainContent_lvProducts_ctrl0_lnkbtnCheckPrice_1" href="Product.html"><u>Details & Pricing</u></a>
-                                                </div>
-                                                <input type="hidden" name="" id="MainContent_lvProducts_ctrl0_hfProductCode_1" value="PCA1002" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6" style="margin: 10px 0 10px 0;">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-12">
-                                                <div style="width: 180px; float: left">
-                                                    <input type="image" name="" id="MainContent_lvProducts_ctrl0_imgbtnProductThumb_1" class="productItemImageimg" src="products/product_04.jpg" alt="Caramel Cake" />
-                                                </div>
-                                                <div style="margin-left: 183px; padding-top: 20px;">
-                                                    <a id="MainContent_lvProducts_ctrl0_lnkbtnProductName_1" href=""><h4>Caramel Cake</h4></a>
-                                                    <div class="text-sm" style="margin-bottom:12px;">
-                                                        Large, Small, Piece
-                                                    </div>
-
-                                                    <a id="MainContent_lvProducts_ctrl0_lnkbtnCheckPrice_1" href="Product.html"><u>Details & Pricing</u></a>
-                                                </div>
-                                                <input type="hidden" name="" id="MainContent_lvProducts_ctrl0_hfProductCode_1" value="PCA1002" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6" style="margin: 10px 0 10px 0;">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-12">
-                                                <div style="width: 180px; float: left">
-                                                    <input type="image" name="" id="MainContent_lvProducts_ctrl0_imgbtnProductThumb_1" class="productItemImageimg" src="products/product_05.jpg" alt="Caramel Cake" />
-                                                </div>
-                                                <div style="margin-left: 183px; padding-top: 20px;">
-                                                    <a id="MainContent_lvProducts_ctrl0_lnkbtnProductName_1" href=""><h4>Caramel Cake</h4></a>
-                                                    <div class="text-sm" style="margin-bottom:12px;">
-                                                        Large, Small, Piece
-                                                    </div>
-
-                                                    <a id="MainContent_lvProducts_ctrl0_lnkbtnCheckPrice_1" href="Product.html"><u>Details & Pricing</u></a>
-                                                </div>
-                                                <input type="hidden" name="" id="MainContent_lvProducts_ctrl0_hfProductCode_1" value="PCA1002" />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
 
                                 <div id="paginationsection">

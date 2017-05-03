@@ -26,7 +26,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
 
         <!--<link rel="stylesheet" type="text/css" href="css/slider.css">-->
-        <link href="css/home.css" rel="stylesheet"/>
+        <link href="css/homecss.css" rel="stylesheet"/>
     </head>
     <body>
         <div class="container" >

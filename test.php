@@ -10,41 +10,16 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <?php 
-$num_rec_per_page=10;
-mysql_connect('localhost','root','123');
-mysql_select_db('divine');
-if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; }; 
-$start_from = ($page-1) * $num_rec_per_page; 
-$sql = "SELECT * FROM product LIMIT $start_from, $num_rec_per_page"; 
-$rs_result = mysql_query ($sql); //run the query
-?> 
-<table>
-<tr><td>Name</td><td>Phone</td></tr>
-<?php 
-while ($row = mysql_fetch_assoc($rs_result)) { 
-?> 
-            <tr>
-            <td><?php echo $row['id']; ?></td>
-            <td><?php echo $row['name']; ?></td>            
-            </tr>
-<?php 
-}; 
-?> 
-</table>
-<?php 
-$sql = "SELECT * FROM product"; 
-$rs_result = mysql_query($sql); //run the query
-$total_records = mysql_num_rows($rs_result);  //count number of records
-$total_pages = ceil($total_records / $num_rec_per_page); 
+        <?php
+        include_once './src/DBConnection.php';
 
-echo "<a href='pagination.php?page=1'>".'|<'."</a> "; // Goto 1st page  
+            $sql = "Update product set img='' where product_id='184'";
 
-for ($i=1; $i<=$total_pages; $i++) { 
-            echo "<a href='test.php?page=".$i."'>".$i."</a> "; 
-}; 
-echo "<a href='test.php?page=$total_pages'>".'>|'."</a> "; // Goto last page
-?>
-
+            if ($conn->query($sql) === TRUE) {
+                echo "Success";
+            } else {
+                echo "Error " . mysqli_error($conn);
+            }
+            ?>
     </body>
 </html>

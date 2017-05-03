@@ -108,6 +108,7 @@ and open the template in the editor.
                         {
                             document.getElementById("loginoutputmsg").className = "hidden";
                             var reply = xmlHttp.responseText;
+                            console.log(reply);
                             if (reply === "1") {
                                 window.location = 'index.php';
                             }if (reply === "2") {
