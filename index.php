@@ -10,7 +10,10 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="windows-1252">
-        <title></title>
+        <link rel="shortcut icon" href="img/divine.ico"/>
+
+        <title>DIVINE | FOODS</title>
+        
     </head>
     <body>
         
@@ -91,11 +94,11 @@ and open the template in the editor.
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <div class="HomePageContentBlock" style="height: 410px;">
                                 <div class="HomePageContentInnerContentTitle">
-                                    <a href="Cakes.html">
+                                    <a href="OurMenu.php">
                                         <h3>Cakes & Sweet Treats</h3>
                                     </a>
                                 </div>
-                                <a href="Cakes.html">
+                                    <a href="Cakes.php">
                                     <div style="width: 100%; height: 220px; background: #fff url('img/home_image01.png') no-repeat top center;">
                                     </div>
                                 </a>
@@ -113,11 +116,11 @@ and open the template in the editor.
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <div class="HomePageContentBlock" style="height: 410px;">
                                 <div class="HomePageContentInnerContentTitle">
-                                    <a href="Cakes.html">
+                                    <a href="Cakes.php">
                                         <h3>Event Catering</h3>
                                     </a>
                                 </div>
-                                <a href="Cakes.html">
+                                    <a href="Cakes.php">
                                     <div style="width: 100%; height: 220px; background: #fff url('img/home_image02.png') no-repeat top center;">
                                     </div>
                                 </a>
@@ -135,11 +138,11 @@ and open the template in the editor.
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <div class="HomePageContentBlock" style="height: 410px;">
                                 <div class="HomePageContentInnerContentTitle">
-                                    <a href="OurMenu.html">
+                                    <a href="OurMenu.php">
                                         <h3>Order Online</h3>
                                     </a>
                                 </div>
-                                <a href="OurMenu.html">
+                                    <a href="OurMenu.php">
                                     <div style="width: 100%; height: 220px; background: #fff url('img/home_image03.png') no-repeat top center;">
                                     </div>
                                 </a>

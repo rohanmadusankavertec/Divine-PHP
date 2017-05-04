@@ -7,6 +7,9 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="shortcut icon" href="img/divine.ico"/>
+
+        <title>DIVINE | FOODS</title>
         <style type="text/css">
 
             #footer {
@@ -52,26 +55,6 @@ and open the template in the editor.
                 box-sizing: border-box;
             }
 
-            @media screen and (min-width: 0px) and (max-width: 700px) {
-                #menubar1 { display: none; }   /* hide it elsewhere */
-                #menubar2 { display: none; }   
-                #menubar3 { display: block; }   
-                #submenuforci { display: none; }   
-            }
-            @media screen and (min-width: 701px) and (max-width: 1200px) {
-                #menubar1 { display: none; }   /* hide it elsewhere */
-                #menubar2 { display: block; }   
-                #menubar3 { display: none; }
-                #submenuforci { display: block; }
-            }
-
-            @media screen and (min-width: 1201px) and (max-width: 10000px) {
-                #menubar1 { display: block; }  /* show it on small screens */
-                #menubar2 { display: none; }  
-                #menubar3 { display: none; }
-                #submenuforci { display: block; }
-
-            }
 
         </style>
     </head>

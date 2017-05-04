@@ -10,7 +10,9 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="windows-1252">
-        <title></title>
+        <link rel="shortcut icon" href="img/divine.ico"/>
+
+        <title>DIVINE | FOODS</title>
 
         <script type="text/javascript">
             function getAjaxObject() {

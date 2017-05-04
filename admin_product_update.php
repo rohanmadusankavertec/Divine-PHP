@@ -32,7 +32,9 @@ include_once './src/DBConnection.php';
     <head>
         <meta charset="UTF-8">
 
-
+<link rel="shortcut icon" href="img/divine.ico"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DIVINE | FOODS</title>
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">

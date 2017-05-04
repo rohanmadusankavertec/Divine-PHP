@@ -10,7 +10,9 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="windows-1252">
-        <title></title>
+        <link rel="shortcut icon" href="img/divine.ico"/>
+
+        <title>DIVINE | FOODS</title>
     </head>
     <body>
         
@@ -80,9 +82,9 @@ and open the template in the editor.
 <!--                        <img src="img/delivery4.jpg" class="img-responsive" alt="Sponge catering services"  /><br/>
                         <img src="img/Deliveryman.jpg" class="img-responsive" alt="Sponge catering services"  /><br/>
                         <img src="img/delivery1.jpg" class="img-responsive" alt="Sponge catering services" />-->
-                        <img src="img/delivery4.jpg" class="img-responsive" alt="Sponge catering services" style="height: 235px;width: 352px;margin-top: 20px; float: right;"/><br/>
-                        <img src="img/Deliveryman.jpg" class="img-responsive" alt="Sponge catering services" style="height: 235px;width: 352px;margin-top: -10px;" /><br/>
-                        <img src="img/delivery1.jpg" class="img-responsive" alt="Sponge catering services" style="height: 235px;width: 352px;margin-top: -10px; float: right;"/>
+                        <img src="img/delivery4.jpg" class="img-responsive" alt="Sponge catering services" style="height: 235px;width: 352px;margin-top: 20px; margin-bottom: 5px; float: right;"/><br/>
+                        <img src="img/Deliveryman.jpg" class="img-responsive" alt="Sponge catering services" style="height: 235px;width: 352px; margin-top: 10px;" /><br/>
+                        <img src="img/delivery1.jpg" class="img-responsive" alt="Sponge catering services" style="height: 235px;width: 352px;float: right; margin-top: -15px;"/>
                     </div>
                 </div>
                 <hr />

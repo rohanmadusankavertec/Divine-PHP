@@ -10,7 +10,9 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="windows-1252">
-        <title></title>
+        <link rel="shortcut icon" href="img/divine.ico"/>
+
+        <title>DIVINE | FOODS</title>
         <script type="text/javascript">
             function getAjaxObject() {
                 var xmlHttp;
@@ -48,13 +50,13 @@ and open the template in the editor.
                 xmlHttp.open("POST", "src/Product.php?action=getsubcategory&id=" + id, true);
                 xmlHttp.send();
             }
-            
-            var currentpage=1;
-            var totalpages=0;
-            
-            
+
+            var currentpage = 1;
+            var totalpages = 0;
+
+
             function getProducts(page) {
-                currentpage=page;
+                currentpage = page;
                 $("#products").empty();
                 $("#paginationsection").empty();
                 var cat = document.getElementById("category").value;
@@ -79,40 +81,46 @@ and open the template in the editor.
                             p.innerHTML = old + productHTML;
                         }
 
-                        totalpages=Obj.pages;
+                        totalpages = Obj.pages;
                         if (Obj.pages == 0) {
-                            alert("Empty data set");
                         } else {
                             var ul = document.createElement("ul");
                             ul.className = "pagination";
-                            
-                            
+
+
                             var lie = document.createElement("li");
-                                var ae = document.createElement("a");
-                                ae.innerHTML = "&laquo;";
-                                ae.href="#";
-                                lie.appendChild(ae);
-                                ul.appendChild(lie);
-                            
+                            var ae = document.createElement("a");
+                            ae.innerHTML = "&laquo;";
+                            ae.href = "javascript:previousePage();";
+                            lie.appendChild(ae);
+                            ul.appendChild(lie);
+
                             for (var i = 0; i < Obj.pages; i++) {
-                                
-                                var pn= parseInt(i)+parseInt(1);
+
+                                var pn = parseInt(i) + parseInt(1);
                                 var lie = document.createElement("li");
+
+                                if ((i + 1) == currentpage) {
+                                    lie.className = "active";
+                                }
+
+
+
                                 var ae = document.createElement("a");
                                 ae.innerHTML = i + 1;
-                                ae.href="javascript:getProducts('"+pn+"');";
+                                ae.href = "javascript:getProducts('" + pn + "');";
                                 lie.appendChild(ae);
                                 ul.appendChild(lie);
-                                
+
                             }
-                            
+
                             var lie = document.createElement("li");
-                                var ae = document.createElement("a");
-                                ae.innerHTML = "&raquo;";
-                                ae.href="#";
-                                lie.appendChild(ae);
-                                ul.appendChild(lie);
-                            
+                            var ae = document.createElement("a");
+                            ae.innerHTML = "&raquo;";
+                            ae.href = "javascript:nextPage();";
+                            lie.appendChild(ae);
+                            ul.appendChild(lie);
+
                             pagination.appendChild(ul);
                         }
 
@@ -122,8 +130,21 @@ and open the template in the editor.
                 xmlHttp.send();
             }
 
-            function nextPage(){
-                getProducts(page);
+            function nextPage() {
+                if (currentpage == totalpages) {
+                    getProducts(currentpage);
+
+                } else {
+                    getProducts(currentpage + 1);
+                }
+            }
+            function previousePage() {
+                if (currentpage == 1) {
+                    getProducts(1);
+
+                } else {
+                    getProducts(currentpage - 1);
+                }
             }
         </script>
     </head>
@@ -235,22 +256,22 @@ and open the template in the editor.
 
                                 <div class="row clearfix" id="products">
 
-                                    
+
                                 </div>
 
                                 <div id="paginationsection">
                                     <hr />
-<!--                                    <ul class = "pagination">
-                                        <li><a href = "#">&laquo;</a></li>
-                                        <li><a href = "#">1</a></li>
-                                        <li><a href = "#">2</a></li>
-                                        <li><a href = "#">3</a></li>
-                                        <li><a href = "#">4</a></li>
-                                        <li><a href = "#">5</a></li>
-                                        <li><a href = "#">&raquo;</a></li>
-                                    </ul>-->
+                                    <!--                                    <ul class = "pagination">
+                                                                            <li><a href = "#">&laquo;</a></li>
+                                                                            <li><a href = "#">1</a></li>
+                                                                            <li><a href = "#">2</a></li>
+                                                                            <li><a href = "#">3</a></li>
+                                                                            <li><a href = "#">4</a></li>
+                                                                            <li><a href = "#">5</a></li>
+                                                                            <li><a href = "#">&raquo;</a></li>
+                                                                        </ul>-->
                                 </div>
-                                
+
 
 
 

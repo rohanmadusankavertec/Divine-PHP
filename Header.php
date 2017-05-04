@@ -10,7 +10,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <!-- Latest compiled and minified CSS -->
-
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="boostrap/css/bootstrap.min.css">
 
         <!-- jQuery library -->
@@ -23,10 +23,35 @@ and open the template in the editor.
 
         <link rel="shortcut icon" href="img/divine.ico"/>
 
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+        <!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">-->
 
         <!--<link rel="stylesheet" type="text/css" href="css/slider.css">-->
         <link href="css/homecss.css" rel="stylesheet"/>
+        
+        
+        <style type="text/css">
+            
+            @media screen and (min-width: 0px) and (max-width: 700px) {
+                #menubar1 { display: none; }   /* hide it elsewhere */
+                #menubar2 { display: none; }   
+                #menubar3 { display: block; }   
+                #submenuforci { display: none; }   
+            }
+            @media screen and (min-width: 701px) and (max-width: 1200px) {
+                #menubar1 { display: none; }   /* hide it elsewhere */
+                #menubar2 { display: block; }   
+                #menubar3 { display: none; }
+                #submenuforci { display: block; }
+            }
+
+            @media screen and (min-width: 1201px) and (max-width: 10000px) {
+                #menubar1 { display: block; }  /* show it on small screens */
+                #menubar2 { display: none; }  
+                #menubar3 { display: none; }
+                #submenuforci { display: block; }
+
+            }
+        </style>
     </head>
     <body>
         <div class="container" >
@@ -43,15 +68,11 @@ and open the template in the editor.
                             <a href="ShoppingCart.php" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="lblCartLinkOnPhone">Cart</span></a>
                             <a href="src/Login.php?action=logout" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Logout</span></a>
                            
-
-
                             <?php
                         } else {
                             ?>
                             <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Login</span></a>
                             <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> <span id="lblCartLinkOnPhone">Register</span></a>
-
-
 
                             <?php
                         }
@@ -116,7 +137,7 @@ and open the template in the editor.
 
             <div class="menubar2" id="menubar2">
                 <center>
-                    <a href="index2.html" style="margin-left: 30%;">
+                    <a href="index.php" style="margin-left: 30%;">
                         <img src="img/logo-new-edited2.png" width="100" height="100"/>
                     </a>
                 </center>
