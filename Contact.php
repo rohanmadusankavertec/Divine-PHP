@@ -211,9 +211,9 @@ and open the template in the editor.
                         </div>
                         <address>
                             <strong>Divine Cake (Pvt) Ltd.</strong><br />
-                            Queen's Rd, Colombo<br />
+                            No 32, Queen's Rd, Colombo<br />
                             Sri Lanka<br />
-                            Phone: (+94) 11 2 583598<br />
+                            Phone: (+94) 11 2 583598 / (+94) 11 2 583018<br />
                         </address>
                         <strong>Restaurant Open Hours:</strong><br />
                         7:00am to 7:00pm (Monday - Saturday)<br />

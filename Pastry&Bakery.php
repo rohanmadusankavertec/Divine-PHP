@@ -22,7 +22,7 @@ and open the template in the editor.
 
 
     <center>
-        <div id="MainContent_bgTopLarge" class="hidden-xs" style="height: 500px; width:93%; overflow: hidden;  z-index: -5; background: #fff url('img/PageImage4.jpg') no-repeat top center;"></div>
+        <div id="MainContent_bgTopLarge" class="hidden-xs" style="height: 500px; width:93%; overflow: hidden;  z-index: -5; background: #fff url('img/PageImage3.jpg') no-repeat top center;"></div>
     </center>
         <div class="visible-xs" style="height:320px;padding:0;z-index:-5;margin-top:-125px;background:#fff;" ></div>
         <div class="container InnerPageContentBlock" style="font-size: 16px;letter-spacing: 1px; width: 91%">
@@ -61,7 +61,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 
@@ -101,7 +101,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 
@@ -171,7 +171,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 
@@ -214,7 +214,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 
@@ -277,7 +277,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 
@@ -315,7 +315,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 
@@ -377,7 +377,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 
@@ -412,7 +412,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 
@@ -474,7 +474,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 
@@ -512,7 +512,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 
@@ -574,7 +574,7 @@ and open the template in the editor.
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
-                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 2, '.', '');?></td>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></td><td></td><td>Rs.<?php echo number_format((float)$row["price"], 0, '.', '');?></td>
                                         </tr>
 
 

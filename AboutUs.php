@@ -97,7 +97,7 @@ Hence we only sell our cakes through our own outlets, so that the same quality p
                         <div class="col-xs-12 col-md-12 text-center">
                             <!--<img src="images/anniversary-logo_white.jpg" width="272" height="196" alt="Sponge. 30 years 1985-2015" /><br />-->
                             <br />
-                            <img src="img/aboutus_grouppic.jpg" width="350" height="149" alt="Sponge Staff Group Photo" class="img-thumbnail" /><br />
+                            <!--<img src="img/aboutus_grouppic.jpg" width="350" height="149" alt="Sponge Staff Group Photo" class="img-thumbnail" /><br />-->
                             <br />
                         </div>
                     </div>
