@@ -221,12 +221,12 @@ and open the template in the editor.
                         <div>
                             Like us on Facebook
                             <br />
-                            <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FDivineCakesSL&amp;width&amp;height=62&amp;colorscheme=light&amp;show_faces=false&amp;header=false&amp;stream=false&amp;show_border=false" scrolling="no" frameborder="0" style="border: none; overflow: hidden; height: 62px;" allowtransparency="true"></iframe>
+                            <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FDivineCakesSL&amp;width&amp;height=62&amp;colorscheme=light&amp;show_faces=false&amp;header=false&amp;stream=false&amp;show_border=false" scrolling="no" frameborder="0" width="100%"  style="border: none; overflow: hidden; height: 62px;" allowtransparency="true"></iframe>
                         </div>
                         <br />
                         <div>
                             Location on Google Maps
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7921.857466176807!2d79.85153226901564!3d6.899127031944129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25961f6e1545b%3A0x63cd1e0006464620!2sDivine+Cake!5e0!3m2!1sen!2slk!4v1489490304883" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7921.857466176807!2d79.85153226901564!3d6.899127031944129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25961f6e1545b%3A0x63cd1e0006464620!2sDivine+Cake!5e0!3m2!1sen!2slk!4v1489490304883" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>

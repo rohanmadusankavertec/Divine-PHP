@@ -10,7 +10,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <!-- Latest compiled and minified CSS -->
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="boostrap/css/bootstrap.min.css">
 
         <!-- jQuery library -->
@@ -27,10 +27,10 @@ and open the template in the editor.
 
         <!--<link rel="stylesheet" type="text/css" href="css/slider.css">-->
         <link href="css/homecss.css" rel="stylesheet"/>
-        
-        
+
+
         <style type="text/css">
-            
+
             @media screen and (min-width: 0px) and (max-width: 700px) {
                 #menubar1 { display: none; }   /* hide it elsewhere */
                 #menubar2 { display: none; }   
@@ -60,14 +60,13 @@ and open the template in the editor.
 
 
                     <?php
-                    
                     if (isset($_SESSION['user_type'])) {
                         if ($_SESSION['user_type'] == "user") {
                             ?>
                             <span id="lblCartLinkOnPhone">Hi <?php echo $_SESSION['first'] ?></span>
                             <a href="ShoppingCart.php" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="lblCartLinkOnPhone">Cart</span></a>
                             <a href="src/Login.php?action=logout" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Logout</span></a>
-                           
+
                             <?php
                         } else {
                             ?>
@@ -192,10 +191,42 @@ and open the template in the editor.
                             <div class="nav navbar-right visible-xs hidden-sm hidden-md hidden-lg" style="float: right; padding: 10px 10px 0 0;">
                                 <div id="UpdatePanelCartTotalBadgePhone">
 
-                                    <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Login</span></a>
+<!--                                    <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Login</span></a>
                                     <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> <span id="lblCartLinkOnPhone">Register</span></a>
-                                    <a href="ShoppingCart.php" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="lblCartLinkOnPhone">Cart</span></a>
+                                    <a href="ShoppingCart.php" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="lblCartLinkOnPhone">Cart</span></a>-->
 
+                                    
+                                    
+                                    <?php
+                    if (isset($_SESSION['user_type'])) {
+                        if ($_SESSION['user_type'] == "user") {
+                            ?>
+                            <span id="lblCartLinkOnPhone">Hi <?php echo $_SESSION['first'] ?></span>
+                            <a href="ShoppingCart.php" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="lblCartLinkOnPhone">Cart</span></a>
+                            <a href="src/Login.php?action=logout" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Logout</span></a>
+
+                            <?php
+                        } else {
+                            ?>
+                            <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Login</span></a>
+                            <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> <span id="lblCartLinkOnPhone">Register</span></a>
+
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Login</span></a>
+                        <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> <span id="lblCartLinkOnPhone">Register</span></a>
+
+                        <?php
+                    }
+                    ?>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
@@ -220,9 +251,8 @@ and open the template in the editor.
                                 <li>
                                     <a href="Outlets.php">Outlets</a>
                                 </li>
-
                                 <li>
-                                    <a href="Cakes.php">Price Guide</a>
+                                    <a href="FAQ.php">FAQ</a>
                                 </li>
                                 <li>
                                     <a href="Contact.php">Contact</a>
@@ -231,15 +261,41 @@ and open the template in the editor.
 
                             </ul>
                             <ul class="nav navbar-nav navbar-right visible-xs hidden-sm hidden-md hidden-lg">
-                                <li><a href="Login.php" class="visible-xs hidden-sm hidden-md hidden-lg">Register</a></li>
-                                <li><a href="Login.php" class="visible-xs hidden-sm hidden-md hidden-lg">Log in</a></li>
+                                <!--                                <li><a href="Login.php" class="visible-xs hidden-sm hidden-md hidden-lg">Register</a></li>
+                                                                <li><a href="Login.php" class="visible-xs hidden-sm hidden-md hidden-lg">Log in</a></li>-->
+                            
+                            <?php
+                    if (isset($_SESSION['user_type'])) {
+                        if ($_SESSION['user_type'] == "user") {
+                            ?>
+                            <span id="lblCartLinkOnPhone">Hi <?php echo $_SESSION['first'] ?></span>
+                            <a href="ShoppingCart.php" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="lblCartLinkOnPhone">Cart</span></a>
+                            <a href="src/Login.php?action=logout" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Logout</span></a>
+
+                            <?php
+                        } else {
+                            ?>
+                            <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Login</span></a>
+                            <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> <span id="lblCartLinkOnPhone">Register</span></a>
+
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-log-in"></span> <span id="lblCartLinkOnPhone1">Login</span></a>
+                        <a href="Login.php" class="btn btn-link"><span class="glyphicon glyphicon-user"></span> <span id="lblCartLinkOnPhone">Register</span></a>
+
+                        <?php
+                    }
+                    ?>
+                            
                             </ul>
                         </div>
-                        <div class="hidden-xs visible-sm visible-md visible-lg" style="margin-top: -100px; margin-right: -10px; float: right;">
+<!--                        <div class="hidden-xs visible-sm visible-md visible-lg" style="margin-top: -100px; margin-right: -10px; float: right;">
                             <div id="UpdatePanelCartTotalBadgePad">
                                 <a href="ShoppingCart.php" id="linkCartCount" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="lblCartLinkOnPad">Cart</span></a>
                             </div>                        
-                        </div>
+                        </div>-->
                     </div>
                 </div>
 

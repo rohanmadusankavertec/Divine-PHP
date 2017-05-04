@@ -78,7 +78,7 @@ and open the template in the editor.
                         <br />
                     </div>
 
-                    <div class="col-sm-6 col-md-6 col-xs-12" style="width: 50%;height: 750px;">
+                    <div class="col-sm-6 col-md-6 hidden-xs" style="width: 50%;height: 750px;">
 <!--                        <img src="img/delivery4.jpg" class="img-responsive" alt="Sponge catering services"  /><br/>
                         <img src="img/Deliveryman.jpg" class="img-responsive" alt="Sponge catering services"  /><br/>
                         <img src="img/delivery1.jpg" class="img-responsive" alt="Sponge catering services" />-->

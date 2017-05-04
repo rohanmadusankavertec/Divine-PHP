@@ -243,9 +243,7 @@ and open the template in the editor.
                         <br />
                     </div>
                     <div class="col-xs-12 col-sm-8 col-md-9">
-                        <p class="pull-left visible-xs" style="margin-top: 20px;">
-                            <button type="button" class="btn btn-warning btn-xs" data-toggle="offcanvas"><span class="glyphicon glyphicon-th-list"></span>&nbsp;Categories Menu</button>
-                        </p>
+                        
                         <br />
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">

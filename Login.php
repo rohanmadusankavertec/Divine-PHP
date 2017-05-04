@@ -146,7 +146,7 @@ and open the template in the editor.
         <div class="row InnerPageContentInnerContentWrap">
             <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
                 <div class="row">
-                    <div class="col-xs-12 col-md-4" style="border-right: solid 1px #ededed">
+                    <div class="col-xs-12 col-md-4" style="border-right: solid 1px #ededed;margin-bottom: 50px;">
                         <div id="MainContent_UpdatePanelForm">
 
                             <h4>Login</h4>
