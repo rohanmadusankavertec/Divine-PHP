@@ -173,5 +173,37 @@ VALUES ('" . $product . "', '" . $description . "', '" . $price . "', '" . $name
     $myJSON = json_encode($myObj);
     echo $myJSON;
     $conn->close();
+}else if ($data == "getallproducts") {
+
+
+    $category = $_REQUEST["category"];
+    $subcategory = $_REQUEST["subcategory"];
+
+    $sql = "SELECT p.id,p.name,p.price,p.img FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where p.is_valid='1' ";
+
+    if ($category != "") {
+        $sql.="and c.category='" . $category . "' ";
+    }
+    if ($subcategory != "") {
+        $sql.="and s.subcategory='" . $subcategory . "' ";
+    }
+
+    $rs_result = $conn->query($sql); //run the query
+    $arr = array();
+
+    while ($row = $rs_result->fetch_assoc()) {
+
+        $pro = array($row["id"], $row["name"], $row["price"], $row["img"]);
+
+
+        array_push($arr, $pro);
+    }
+    
+    $myObj = new stdClass();
+    $myObj->product = $arr;
+    
+    $myJSON = json_encode($myObj);
+    echo $myJSON;
+    $conn->close();
 }
 

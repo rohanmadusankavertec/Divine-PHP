@@ -95,7 +95,7 @@ and open the template in the editor.
                                 <div class="HomePageContentBlock" style="height: 410px;">
                                 <div class="HomePageContentInnerContentTitle">
                                     <a href="OurMenu.php">
-                                        <h3>Cakes & Sweet Treats</h3>
+                                        <h3>Cakes & Savouries</h3>
                                     </a>
                                 </div>
                                     <a href="Cakes.php">

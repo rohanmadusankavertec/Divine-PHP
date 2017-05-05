@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -13,151 +10,15 @@ and open the template in the editor.
         <link rel="shortcut icon" href="img/divine.ico"/>
 
         <title>DIVINE | FOODS</title>
-        <script type="text/javascript">
-            function getAjaxObject() {
-                var xmlHttp;
-                if (window.XMLHttpRequest) {
-                    xmlHttp = new XMLHttpRequest();
-                } else
-                {
-                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                return xmlHttp;
-            }
-            function getSubcategory() {
-                $("#subcate").empty();
-                var id = document.getElementById("category").value;
-                var s1 = document.getElementById("subcate");
-                var t1 = document.createElement("option");
-                t1.value = "0";
-                t1.innerHTML = "-- Select Sub Category --";
-                s1.appendChild(t1);
-                var xmlHttp = getAjaxObject();
-                xmlHttp.onreadystatechange = function ()
-                {
-                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
-                    {
-                        var Obj = JSON.parse(this.responseText);
-                        for (x in Obj) {
-                            var t1 = document.createElement("option");
-                            t1.value = Obj[x][0];
-                            t1.innerHTML = Obj[x][1];
-                            s1.appendChild(t1);
-                        }
-                        getProducts(1);
-                    }
-                };
-                xmlHttp.open("POST", "src/Product.php?action=getsubcategory&id=" + id, true);
-                xmlHttp.send();
-            }
-
-            var currentpage = 1;
-            var totalpages = 0;
-
-
-            function getProducts(page) {
-                currentpage = page;
-                $("#products").empty();
-                $("#paginationsection").empty();
-                var cat = document.getElementById("category").value;
-                var sub = document.getElementById("subcate").value;
-                var p = document.getElementById("products");
-                var pagination = document.getElementById("paginationsection");
-                var xmlHttp = getAjaxObject();
-                xmlHttp.onreadystatechange = function ()
-                {
-                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
-                    {
-                        var Obj = JSON.parse(this.responseText);
-                        for (x in Obj.product) {
-                            var old = p.innerHTML;
-                            var productHTML = "";
-                            if (Obj.product[x][3] === null) {
-                                productHTML = "<div class='col-xs-12 col-sm-12 col-md-6' style='margin: 10px 0 10px 0;'><div class='row'><div class='col-sm-12 col-md-12'><div style='width: 180px; float: left'><input type='image' class='productItemImageimg' src='img/no-image-available.jpg' /></div><div style='margin-left: 183px; padding-top: 20px;'><a href='Product.php?product=" + Obj.product[x][0] + "'><h4>" + Obj.product[x][1] + "</h4></a><div class='text-sm' style='margin-bottom:12px;'> Rs. " + Obj.product[x][2] + "</div><a href='Product.php?product=" + Obj.product[x][0] + "'><u>Details & Pricing</u></a> </div></div></div></div>";
-                            } else {
-                                productHTML = "<div class='col-xs-12 col-sm-12 col-md-6' style='margin: 10px 0 10px 0;'><div class='row'><div class='col-sm-12 col-md-12'><div style='width: 180px; float: left'><input type='image' class='productItemImageimg' src='src/images/" + Obj.product[x][3] + "' /></div><div style='margin-left: 183px; padding-top: 20px;'><a href='Product.php?product=" + Obj.product[x][0] + "'><h4>" + Obj.product[x][1] + "</h4></a><div class='text-sm' style='margin-bottom:12px;'> Rs. " + Obj.product[x][2] + "</div><a href='Product.php?product=" + Obj.product[x][0] + "'><u>Details & Pricing</u></a> </div></div></div></div>";
-                            }
-
-                            p.innerHTML = old + productHTML;
-                        }
-
-                        totalpages = Obj.pages;
-                        if (Obj.pages == 0) {
-                        } else {
-                            var ul = document.createElement("ul");
-                            ul.className = "pagination";
-
-
-                            var lie = document.createElement("li");
-                            var ae = document.createElement("a");
-                            ae.innerHTML = "&laquo;";
-                            ae.href = "javascript:previousePage();";
-                            lie.appendChild(ae);
-                            ul.appendChild(lie);
-
-                            for (var i = 0; i < Obj.pages; i++) {
-
-                                var pn = parseInt(i) + parseInt(1);
-                                var lie = document.createElement("li");
-
-                                if ((i + 1) == currentpage) {
-                                    lie.className = "active";
-                                }
-
-
-
-                                var ae = document.createElement("a");
-                                ae.innerHTML = i + 1;
-                                ae.href = "javascript:getProducts('" + pn + "');";
-                                lie.appendChild(ae);
-                                ul.appendChild(lie);
-
-                            }
-
-                            var lie = document.createElement("li");
-                            var ae = document.createElement("a");
-                            ae.innerHTML = "&raquo;";
-                            ae.href = "javascript:nextPage();";
-                            lie.appendChild(ae);
-                            ul.appendChild(lie);
-
-                            pagination.appendChild(ul);
-                        }
-
-                    }
-                };
-                xmlHttp.open("POST", "src/Product.php?action=getproducts&category=" + cat + "&subcategory=" + sub + "&page=" + page, true);
-                xmlHttp.send();
-            }
-
-            function nextPage() {
-                if (currentpage == totalpages) {
-                    getProducts(currentpage);
-
-                } else {
-                    getProducts(currentpage + 1);
-                }
-            }
-            function previousePage() {
-                if (currentpage == 1) {
-                    getProducts(1);
-
-                } else {
-                    getProducts(currentpage - 1);
-                }
-            }
-        </script>
     </head>
-    <body onload="getProducts(1);">
+    <body>
 
         <?php
         include './Header.php';
         ?>
 
-
-
     <center>
-        <div id="MainContent_bgTopLarge" class="hidden-xs" style="height: 500px; width:93%; overflow: hidden;  z-index: -5; background: #fff url('img/PageImage9.png') no-repeat top center;"></div>
+        <div id="MainContent_bgTopLarge" class="hidden-xs" style="height: 500px; width:93%; overflow: hidden;  z-index: -5; background: #fff url('img/PageImage4.jpg') no-repeat top center;"></div>
     </center>
     <div class="visible-xs" style="height:320px;padding:0;z-index:-5;margin-top:-125px;background:#fff;" ></div>
     <div class="container InnerPageContentBlock" style="font-size: 16px;letter-spacing: 1px; width: 91%">
@@ -168,118 +29,81 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-
-
-
-
-        <div class="row">
-            <div class="col-md-12 InnerPageContentInnerContentWrap">
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-4 col-md-3">
-                        <h2 class="hidden-xs hidden-sm hidden-md">Our Menu</h2>
-                        <h3 class="hidden-lg">Our Menu</h3>
-                    </div>
-                    <div class="col-xs-12 col-sm-3 col-md-5 text-left">
-                        <div style="margin-top: 5px; margin-left:0; color: silver">
-                            <h3>
-                                <span id="MainContent_lblMenutitle">Cakes & Sweet Treats</span></h3>
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+                        <div id="MainContent_UpdatePanelForm">
+                            <img src="img/butter-cake.jpg" width="100%" height="100%"/>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-5 col-md-4 text-right">
-                        <!--                        <div id="MainContent_PanelSearch" >
-                        
-                                                    <div class="input-group">
-                                                        <input name="ctl00$MainContent$txtSearch" type="text" id="MainContent_txtSearch" class="form-control input-sm" />
-                                                        <span class="input-group-btn">
-                                                            <a id="MainContent_lnkbtnSearch" class="btn btn-default btn-sm" href="javascript:__doPostBack(&#39;ctl00$MainContent$lnkbtnSearch&#39;,&#39;&#39;)"><span class="glyphicon glyphicon-search"></span> Search</a>
-                                                        </span>
-                                                    </div>
-                        
-                                                </div>                        -->
-                    </div>
-                </div>
-                <div class="row row-offcanvas row-offcanvas-left">
-                    <div class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                        <div id="MainContent_Categories" class="accordion">
-                            <!--<input type="hidden" name="ctl00$MainContent$Categories_AccordionExtender_ClientState" id="MainContent_Categories_AccordionExtender_ClientState" value="0" />-->
-                            <div id="MainContent" class="accordionHeaderSelected">
-
-                                <a id="MainContent_lnkBtnMainCatHead_0" >Search Food</a>
-
-                            </div>
-                            <div id="MainContent" class="accordionContent" style="display:block;">
-
-                                <!--<a id="MainContent_rptMenu_0_lnkBtnGroup_0" >All Cakes</a>-->
-                                Category
-                                <select id="category" class="form-control" onchange="getSubcategory();">
-                                    <option selected="selected" value="0">--All Categories--</option>
-                                    <option value="1">Cakes</option>
-                                    <option value="2">Pastry & Bakery</option>
-                                </select>
-
-
-                                <br>
-
-                                Sub Category
-                                <select id="subcate" class="form-control" onchange="getProducts(1);">
-                                    <option selected="selected" value="0">--All Sub Categories--</option>
-
-
-                                </select>
-                                <br>
-
-                                <!--                                        Product
-                                                                        <select id="product" class="form-control">
-                                                                            <option selected="selected" value="">--All Products--</option>
-                                                                            
-                                
-                                                                        </select>-->
-
-                            </div>
-
-
-                        </div>
-
-                        <br />
-                    </div>
-                    <div class="col-xs-12 col-sm-8 col-md-9">
-                        
-                        <br />
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <br />
-                                <div class="visible-sm"><br /></div>
+                    <div class="col-xs-12 col-md-5">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
                                 <br />
                                 <hr />
-
-                                <div class="row clearfix" id="products">
-
-
-                                </div>
-
-                                <div id="paginationsection">
-                                    <hr />
-                                    <!--                                    <ul class = "pagination">
-                                                                            <li><a href = "#">&laquo;</a></li>
-                                                                            <li><a href = "#">1</a></li>
-                                                                            <li><a href = "#">2</a></li>
-                                                                            <li><a href = "#">3</a></li>
-                                                                            <li><a href = "#">4</a></li>
-                                                                            <li><a href = "#">5</a></li>
-                                                                            <li><a href = "#">&raquo;</a></li>
-                                                                        </ul>-->
-                                </div>
-
-
-
-
-
-                                <!--                                <div style="float: right;">
-                                                                    <span id="MainContent_lvProducts_DataPagerOnlineProductsBottom"><a class="aspNetDisabled pagerButtonsBack">First</a>&nbsp;<a class="aspNetDisabled pagerButtonsBack">Previous</a>&nbsp;<span>1</span>&nbsp;<a href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsBottom$ctl01$ctl01&#39;,&#39;&#39;)">2</a>&nbsp;<a href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsBottom$ctl01$ctl02&#39;,&#39;&#39;)">3</a>&nbsp;<a href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsBottom$ctl01$ctl03&#39;,&#39;&#39;)">4</a>&nbsp;<a class="pagerButtonsForward" href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsBottom$ctl02$ctl00&#39;,&#39;&#39;)">Next</a>&nbsp;<a class="pagerButtonsForward" href="javascript:__doPostBack(&#39;ctl00$MainContent$lvProducts$DataPagerOnlineProductsBottom$ctl02$ctl01&#39;,&#39;&#39;)">Last</a>&nbsp;</span>
-                                                                </div>-->
-
-
+                                <br />
                             </div>
+                            <h2>Divine Signature Collection</h2>
+                            <br /><br >
+                            <table>
+
+
+                                <?php
+                                include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Divine Signature Collection' and c.category='Cakes' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
+
+
+
+
+
+<!--                                <tr>
+                                    <td style="width: 300px;"><a href="Product.html">Butter Cake</a></td><td></td><td>Rs.680.00</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="Product.html">Chocolate Cake</a></td><td></td><td>Rs.760.00</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="Product.html">Chocolate Cherry BrandyCake</a></td><td></td><td>Rs.1,110.00</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="Product.html">Chocolate Fudge Cake</a></td><td></td><td>Rs.970.00</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="Product.html">Coffee Cake</a></td><td></td><td>Rs.760.00</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="Product.html">Date Cake with Butterscotch topping</a></td><td></td><td>Rs.1,150.00</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="Product.html">Lemon Curd Cake</a></td><td></td><td>Rs.830.00</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="Product.html">Love Cake</a></td><td></td><td>Rs.1,160.00</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="Product.html">Orange Cake</a></td><td></td><td>Rs.760.00</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="Product.html">Ribbon Cake</a></td><td></td><td>Rs.760.00</td>
+                                </tr>-->
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -289,8 +113,843 @@ and open the template in the editor.
 
 
 
-    </div>
 
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+
+                        <h2>Cake</h2>
+                        <br /><br >
+                        <table>
+                            <?php
+                            include './src/DBConnection.php';
+                            $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Cake' and c.category='Cakes' and p.is_valid='1'";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                    </tr>
+
+
+                                    <?php
+                                }
+                            }
+                            $conn->close();
+                            ?>
+
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+                            <div id="MainContent_UpdatePanelForm">
+                                <img src="img/lemon_cake.jpg" width="100%" height="100%"/>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+                        <div id="MainContent_UpdatePanelForm">
+                            <img src="img/Christmas_pudding.jpg" width="100%" height="100%"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-5">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+                            <h2>Divine Christmas Collection</h2>
+                            <br /><br >
+                            <table>
+
+                                <?php
+                                include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Divine Christmas Collection' and c.category='Cakes' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+
+                        <h2>Gateau</h2>
+                        <br /><br >
+                        <table>
+                            <?php
+                            include './src/DBConnection.php';
+                            $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Gateau' and c.category='Cakes' and p.is_valid='1'";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                    </tr>
+
+
+                                    <?php
+                                }
+                            }
+                            $conn->close();
+                            ?>
+
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+
+
+                            <div id="MainContent_UpdatePanelForm">
+                                <img src="img/Mixed_fruit_gateau.jpeg" width="100%" height="100%"/>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+                        <div id="MainContent_UpdatePanelForm">
+                            <img src="img/Strawberry-cheesecake-recipe.jpg" width="100%" height="100%"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-5">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+                            <h2>Dessert</h2>
+                            <br /><br >
+                            <table>
+                                <?php
+                                include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Dessert' and c.category='Cakes' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>   
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+
+                        <h2>Cup Cakes and other delights</h2>
+                        <br /><br >
+                        <table>
+                            <?php
+                            include './src/DBConnection.php';
+                            $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Cup Cakes and other delights' and c.category='Cakes' and p.is_valid='1'";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                    </tr>
+
+
+                                    <?php
+                                }
+                            }
+                            $conn->close();
+                            ?>  
+
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+
+                            <div id="MainContent_UpdatePanelForm">
+                                <img src="img/chocolate-cup-cake.jpg" width="100%" height="100%"/>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+                        <div id="MainContent_UpdatePanelForm">
+                            <img src="img/ham_cheese_bun.jpg" width="100%" height="100%"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-5">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+                            <h2>Bread</h2>
+                            <br /><br >
+                            <table>
+                                <?php
+                                include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Bread' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+
+                        <h2>Pizza</h2>
+                        <br /><br >
+                        <table>
+                            <?php
+                            include './src/DBConnection.php';
+                            $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Pizza' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                    </tr>
+
+
+                                    <?php
+                                }
+                            }
+                            $conn->close();
+                            ?>
+
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6"style="border-left: solid 1px #ededed">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+                            <div id="MainContent_UpdatePanelForm">
+                                <img src="img/chicken-pizza.jpeg" width="100%" height="100%"/>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+                        <div id="MainContent_UpdatePanelForm">
+                            <img src="img/eggroll.jpg" width="100%" height="100%"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-5">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+                            <h2>Patties, Rolls & Cutlets</h2>
+                            <br /><br >
+                            <table>
+                                <?php
+                                include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Patties, Rolls & Cutlets' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+
+                        <h2>Cocktail Items</h2>
+                        <br /><br >
+                        <table>
+                            <?php
+                            include './src/DBConnection.php';
+                            $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Cocktail Items' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                    </tr>
+
+
+                                    <?php
+                                }
+                            }
+                            $conn->close();
+                            ?>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+
+
+                            <div id="MainContent_UpdatePanelForm">
+                                <img src="img/Chicken_BBQ_kebab.jpg" width="100%" height="100%"/>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+                        <div id="MainContent_UpdatePanelForm">
+                            <img src="img/Vol-Au-Vent.jpg" width="100%" height="100%"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+                            <h2>Pastries & Pies</h2>
+                            <br /><br >
+                            <table>
+                                <?php
+                                include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Pastries & Pies' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+
+                        <h2>Other Savouries</h2>
+                        <br /><br >
+                        <table>
+                            <?php
+                            include './src/DBConnection.php';
+                            $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Other Savouries' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                    </tr>
+
+
+                                    <?php
+                                }
+                            }
+                            $conn->close();
+                            ?>
+
+
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6" style="border-left: solid 1px #ededed">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+
+                            <div id="MainContent_UpdatePanelForm">
+                                <img src="img/csm_stuffed_capsicum.jpg" width="100%" height="100%"/>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+                        <div id="MainContent_UpdatePanelForm">
+                            <img src="img/fried_rice.jpg" width="100%" height="100%"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+                            <h2>Rice</h2>
+                            <br /><br >
+                            <table>
+                                <?php
+                                include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Rice' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+
+                        <h2>Hot Dogs & Burgers</h2>
+                        <br /><br >
+                        <table>
+                            <?php
+                            include './src/DBConnection.php';
+                            $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Hot Dogs & Burgers' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                    </tr>
+
+
+                                    <?php
+                                }
+                            }
+                            $conn->close();
+                            ?>
+
+
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6" style="border-left: solid 1px #ededed">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+
+                            <div id="MainContent_UpdatePanelForm">
+                                <img src="img/hot_dogs.jpg" width="100%" height="100%"/>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+                        <div id="MainContent_UpdatePanelForm">
+                            <img src="img/platters.jpg" width="100%" height="100%"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-5">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+                            <h2>Platters</h2>
+                            <br /><br >
+                            <table>
+                                <?php
+                                include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Platters' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+
+                        <h2>Beverages, Ice Cream & Fruit Salad</h2>
+                        <br /><br >
+                        <table>
+                            <?php
+                            include './src/DBConnection.php';
+                            $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Beverages, Ice Cream & Fruit Salad' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                    </tr>
+
+
+                                    <?php
+                                }
+                            }
+                            $conn->close();
+                            ?>
+
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6" style="border-left: solid 1px #ededed">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+
+                            <div id="MainContent_UpdatePanelForm">
+                                <img src="img/juice.jpg" width="100%" height="100%"/>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row InnerPageContentInnerContentWrap" style="font-size: 16px;letter-spacing: 1px;">
+            <div class="col-xs-12" style="padding: 15px 50px 15px 50px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6" style="border-right: solid 1px #ededed">
+                        <div id="MainContent_UpdatePanelForm">
+                            <img src="img/juice (1).jpg" width="100%" height="100%"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-5">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="visible-xs">
+                                <br />
+                                <hr />
+                                <br />
+                            </div>
+                            <h2>Fresh Juice</h2>
+                            <br /><br >
+                            <table>
+                                <?php
+                                include './src/DBConnection.php';
+                                $sql = "SELECT p.id,p.name,p.price FROM product p inner join subcategory s on p.subcategory_id=s.id inner join category c on c.id=s.category_id where s.subcategory='Fresh Juice' and c.category='Pastry & Bakery' and p.is_valid='1'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <td style="width: 300px;"><a href="Product.php?product=<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></a></td><td></td><td>Rs.<?php echo number_format((float) $row["price"], 0, '.', ''); ?></td>
+                                        </tr>
+
+
+                                        <?php
+                                    }
+                                }
+                                $conn->close();
+                                ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
     <?php
     include './Footer.php';
     ?>
