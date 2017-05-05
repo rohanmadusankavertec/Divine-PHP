@@ -202,23 +202,6 @@ and open the template in the editor.
 
 
 
-
-
-
-        
-
-
-
-
-        
-
-
-
-
-
-
-
-
     </div>
 <?php
 include './Footer.php';

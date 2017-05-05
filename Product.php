@@ -137,9 +137,24 @@ and open the template in the editor.
                                             <div>
                                                 <div style="display: inline-block;">
                                                     <form method="POST" action="src/Cart.php?action=addtocart">
+                                                        <select  class="form-control OverrideformControlDisplay" style="width: 100px; margin-bottom: 10px;">
+                                                            <option>500g</option>
+                                                            <option>1Kg</option>
+                                                            <option>1.5Kg</option>
+                                                            <option>2Kg</option>
+                                                            <option>2.5Kg</option>
+                                                            <option>3Kg</option>
+                                                        </select>
                                                         <label for="MainContent_txtQty" id="MainContent_lblQty" class="text-warning">Qty.</label>
                                                         <input type="hidden" value="<?php echo $_GET["product"]; ?>" name="id"/>
-                                                        <input name="qty" type="text" maxlength="4" id="qty" class="form-control OverrideformControlDisplay" style="width:50px;">
+                                                        <input name="qty" type="text" maxlength="4" id="qty" class="form-control OverrideformControlDisplay" style="width:60px;">
+                                                        
+                                                        <br/>
+                                                        <br/>
+                                                        
+                                                        
+                                                        
+                                                        
                                                         <input type="submit" name="ctl00$MainContent$btnAddToOrder" value="Add to Cart" onclick="" class="btn btn-danger">
                                                     </form>
                                                 </div>
